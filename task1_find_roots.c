@@ -8,17 +8,21 @@ int solve_quad_equation(float a, float b, float c, double *x1, double *x2){
             if (c == 0) return 3;
             return 0;
         }
+
         *x1 = -c / b;
         return 1;
     }
     double quad_discriminant = b * b - 4 * a * c;
+
     if (quad_discriminant < 0){
         return 0;
     }
+
     if (quad_discriminant == 0){
         *x1 = -b / 2 / a;
         return 1;
     }
+
     *x1 = (-b + sqrt(quad_discriminant)) / 2 / a;
     *x2 = (-b - sqrt(quad_discriminant)) / 2 / a;
     return 2;
