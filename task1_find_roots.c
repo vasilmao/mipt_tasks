@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <assert.h>
 
 #define INFROOTS 3
 
@@ -21,9 +22,9 @@
 
 
 int solve_quad_equation(float a, float b, float c, double *x1, double *x2){
-    assert(std::isfinite (a));
-    assert (std::isfinite (b));
-    assert (std::isfinite (c));
+    assert(isfinite (a));
+    assert (isfinite (b));
+    assert (isfinite (c));
     assert (x1 != NULL);
     assert (x2 != NULL);
     assert (x1 != x2);
@@ -38,7 +39,7 @@ int solve_quad_equation(float a, float b, float c, double *x1, double *x2){
         *x1 = -c / b;
         return 1;
     }
-    
+
     double quad_discriminant = b * b - 4 * a * c;
 
     if (quad_discriminant < 0){
@@ -61,7 +62,7 @@ int main(){
         system("chcp 65001");
     #endif
 
-    printf("Scquare equation solver by me\n");
+    printf("Square equation solver by me\n");
 
     float a, b, c;
 
