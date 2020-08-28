@@ -34,10 +34,6 @@ int is_equal_float(float a, float b){
 
 
 int main(){
-    //windows cmd не любит кириллицу (кодировка cp1251), поэтому изменяем кодировку на utf-8 (65001)
-    #ifdef _WIN32
-        system("chcp 65001");
-    #endif
 
     printf("Square equation solver by Vasyan from IVT\n");
 
