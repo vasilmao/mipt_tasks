@@ -77,9 +77,9 @@ int main(){
 
 
 int solve_quad_equation(float a, float b, float c, double *x1, double *x2){
-    assert(isfinite (a));
-    assert(isfinite (b));
-    assert(isfinite (c));
+    assert(isfinite(a));
+    assert(isfinite(b));
+    assert(isfinite(c));
     assert(x1 != NULL);
     assert(x2 != NULL);
     assert(x1 != x2);
