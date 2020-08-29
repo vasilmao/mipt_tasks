@@ -44,7 +44,7 @@ int is_equal_float(float a, float b);
 
 
 
-int main(){
+int main() {
 
     printf("Square equation solver by Vasyan from IVT\n");
 
@@ -57,7 +57,7 @@ int main(){
 
     int n_roots = solve_quad_equation(a, b, c, &x1, &x2);
 
-    switch (n_roots){
+    switch (n_roots) {
         case 0:
             printf("Корней нет!\n");
             break;
@@ -83,7 +83,7 @@ int main(){
 }
 
 
-int solve_quad_equation(float a, float b, float c, double *x1, double *x2){
+int solve_quad_equation(float a, float b, float c, double *x1, double *x2) {
     assert(isfinite(a));
     assert(isfinite(b));
     assert(isfinite(c));
@@ -91,8 +91,8 @@ int solve_quad_equation(float a, float b, float c, double *x1, double *x2){
     assert(x2 != NULL);
     assert(x1 != x2);
 
-    if (a == 0){
-        if (b == 0){
+    if (a == 0) {
+        if (b == 0) {
             if (c == 0) return INFROOTS;
 
             return 0;
@@ -104,12 +104,12 @@ int solve_quad_equation(float a, float b, float c, double *x1, double *x2){
 
     float discriminant = b * b - 4 * a * c;
 
-    if (is_equal_float(discriminant, 0)){
+    if (is_equal_float(discriminant, 0)) {
         *x1 = -b / 2 / a;
         return 1;
     }
 
-    if (discriminant < 0){
+    if (discriminant < 0) {
         return 0;
     }
 
@@ -121,6 +121,6 @@ int solve_quad_equation(float a, float b, float c, double *x1, double *x2){
 }
 
 
-int is_equal_float(float a, float b){
+int is_equal_float(float a, float b) {
     return abs(a - b) < EPSILON;
 }
