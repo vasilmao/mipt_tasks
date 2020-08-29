@@ -28,9 +28,20 @@
 int solve_quad_equation(float a, float b, float c, double *x1, double *x2);
 
 
-int is_equal_float(float a, float b){
-    return abs(a - b) < EPSILON;
-}
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! int is_equal_float documentation
+//!
+//! checks if two float values are approximately equal
+//!
+//! @param [in] a first float value
+//! @param [in] b second float value
+//!
+//! @return 1 if two float values are approximately equal / 0 if not
+//!
+//! @note uses constant EPSILON that equals 1e-6
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+int is_equal_float(float a, float b);
+
 
 
 int main(){
@@ -107,4 +118,9 @@ int solve_quad_equation(float a, float b, float c, double *x1, double *x2){
     *x1 = (-b + discriminant_sqrt) / (2 * a);
     *x2 = (-b - discriminant_sqrt) / (2 * a);
     return 2;
+}
+
+
+int is_equal_float(float a, float b){
+    return abs(a - b) < EPSILON;
 }
