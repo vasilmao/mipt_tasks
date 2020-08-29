@@ -122,5 +122,5 @@ int solve_quad_equation(float a, float b, float c, double *x1, double *x2) {
 
 
 int is_equal_float(float a, float b) {
-    return abs(a - b) < EPSILON;
+    return fabs(a - b) < EPSILON;
 }
