@@ -29,11 +29,12 @@ int compare_strings(char *s1, char *s2);
 //! @param [in] char *linrs[MAXLINES] pointer to char array
 //! @param [in] int start - first index to sort
 //! @param [in] int last - second index to sort (excluding)
+//! @param [in] int (*cmp) (char *, char *) - comparatort
 //!
 //! @note function uses constant MAXLINES = 10^5
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void quicksort(char *lines[MAXLINES], int start, int finish);
+void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *, char *));
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void swap documentation
@@ -73,7 +74,7 @@ int main() {
         ++nlines;
     }
 
-    quicksort(lines, 0, nlines);
+    quicksort(lines, 0, nlines, compare_strings);
 
     for(int i = 0; i < nlines; ++i){
         fprintf(output, "%s\n", lines[i]);
@@ -101,14 +102,14 @@ int compare_strings(char *s1, char *s2) {
     return 0;
 }
 
-void quicksort(char *lines[MAXLINES], int start, int finish) {
+void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *, char *)) {
     if (finish - start <= 1)
         return ;
     int m = (start + finish) / 2;
     swap(&lines[m], &lines[finish - 1]);
     int place_to_insert = start;
     for(int i = start; i < finish - 1; ++i) {
-        if (compare_strings(lines[i], lines[finish - 1]) <= 0) {
+        if (cmp(lines[i], lines[finish - 1]) <= 0) {
             //printf("swapping %s and %s\n", lines[i], lines[place_to_insert]);
             if (i != place_to_insert){
                 swap(&lines[i], &lines[place_to_insert]);
@@ -122,8 +123,8 @@ void quicksort(char *lines[MAXLINES], int start, int finish) {
         }
     }
     swap(&lines[finish - 1], &lines[place_to_insert]);
-    quicksort(lines, start, place_to_insert);
-    quicksort(lines, place_to_insert + 1, finish);
+    quicksort(lines, start, place_to_insert, cmp);
+    quicksort(lines, place_to_insert + 1, finish, cmp);
 }
 
 void swap(char **s1, char **s2) {
