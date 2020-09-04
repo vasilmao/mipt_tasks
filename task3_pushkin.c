@@ -51,15 +51,23 @@ void swap(char **s1, char **s2);
 
 
 int main() {
-    FILE *input, *output;
+    FILE *input = NULL, *output = NULL;
     input = fopen("input.txt", "r");
     output = fopen("output.txt", "w");
 
     char *lines[MAXLINES];
     int nlines = 0;
+    if (input == NULL) {
+        printf("Ошибка чтения файла input.txt\n");
+        return 1;
+    }
 
+    if (output == NULL) {
+        printf("Ошибка чтения файла output.txt\n", );
+        return 1;
+    }
     while(1) {
-        lines[nlines] = malloc(MAXLENGTH);
+        lines[nlines] = calloc(MAXLENGTH, sizeof(char));
 
         if (fgets(lines[nlines], 256, input) == NULL) {
             break;
@@ -78,6 +86,7 @@ int main() {
 
     for(int i = 0; i < nlines; ++i){
         fprintf(output, "%s\n", lines[i]);
+        free(lines[i]);
     }
 
     fclose(input);
@@ -103,6 +112,9 @@ int compare_strings(char *s1, char *s2) {
 }
 
 void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *, char *)) {
+    assert(isfinite(start));
+    assert(isfinite(finish));
+    assert(cmp != NULL);
     if (finish - start <= 1)
         return ;
     int m = (start + finish) / 2;
@@ -110,14 +122,8 @@ void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *,
     int place_to_insert = start;
     for(int i = start; i < finish - 1; ++i) {
         if (cmp(lines[i], lines[finish - 1]) <= 0) {
-            //printf("swapping %s and %s\n", lines[i], lines[place_to_insert]);
             if (i != place_to_insert){
                 swap(&lines[i], &lines[place_to_insert]);
-                //printf("now this is\n");
-                //for(int i = 0; i < 7; ++i) {
-                //    printf("%s\n", lines[i]);
-                //}
-                //printf("\n");
             }
             ++place_to_insert;
         }
@@ -128,8 +134,7 @@ void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *,
 }
 
 void swap(char **s1, char **s2) {
-    //printf("swapping %s and %s\n", );
-    char *temp;
+    char *temp = NULL;
     temp = *s1;
     *s1 = *s2;
     *s2 = temp;
