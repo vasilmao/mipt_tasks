@@ -120,7 +120,7 @@ void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *,
     int m = (start + finish) / 2;
     swap(&lines[m], &lines[finish - 1]);
     int place_to_insert = start;
-    for(int i = start; i < finish - 1; ++i) {
+    for (int i = start; i < finish - 1; ++i) {
         if (cmp(lines[i], lines[finish - 1]) <= 0) {
             if (i != place_to_insert){
                 swap(&lines[i], &lines[place_to_insert]);
