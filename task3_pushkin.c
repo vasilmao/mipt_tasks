@@ -51,6 +51,9 @@ void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *,
 void swap(char **s1, char **s2);
 
 
+int get_file_size(char *filename);
+
+int get_number_of_lines(char *buffer, int *buffer_size);
 
 
 int main() {
@@ -58,7 +61,6 @@ int main() {
     input = fopen("input.txt", "r");
     output = fopen("output.txt", "w");
 
-    int nlines = 0;
     if (input == NULL) {
         printf("Ошибка чтения файла input.txt\n");
         return 1;
@@ -69,31 +71,18 @@ int main() {
         return 1;
     }
 
-    struct stat file_stats;
-    stat("input.txt", &file_stats);
 
-    int buffer_size = file_stats.st_size + 1;
+
+    int buffer_size = get_file_size("input.txt") + 1;
 
     char *buffer = calloc(buffer_size, sizeof(char));
 
     fread(buffer, sizeof(char), buffer_size, input);
-    for(int i = 0; i < buffer_size; ++i) {
-        if (buffer[i] == '\0') {
-            if (i > 0) {
-                if (buffer[i - 1] == '\0'){
-                    buffer_size = i;
-                } else {
-                    nlines++;
-                    buffer_size = i + 1;
-                }
-            }
-            break;
-        }
-        if (buffer[i] == '\n') {
-            nlines++;
-            buffer[i] = '\0';
-        }
-    }
+
+
+
+    int nlines = get_number_of_lines(buffer, &buffer_size);
+
     char **lines = calloc(nlines + 1, sizeof(char*));
 
     lines[0] = buffer;
@@ -101,16 +90,24 @@ int main() {
 
 
     for(int i = 0; i < buffer_size; ++i) {
-        if (buffer[i] == '\0') {
+        printf("%d %d\n", buffer[i], i);
+        if (buffer[i] == '\n') {
+            buffer[i] = '\0';
+            if (counter == nlines) {
+                break;
+            }
             lines[counter++] = buffer + i + 1;
         }
-        if (counter == nlines) {
-            break;
-        }
     }
-    quicksort(lines, 0, nlines, compare_strings);
+    //quicksort(lines, 0, nlines, compare_strings);
 
     for(int i = 0; i < nlines; ++i) {
+        for(int j = 0; ; ++j) {
+            //fprintf(output, "%d\n", lines[i][j]);
+            if (lines[i][j] == '\0'){
+                break;
+            }
+        }
         fprintf(output, "%s\n", lines[i]);
     }
 
@@ -171,4 +168,32 @@ void swap(char **s1, char **s2) {
     temp = *s1;
     *s1 = *s2;
     *s2 = temp;
+}
+
+int get_file_size(char *filename) {
+    struct stat file_stats;
+    stat("input.txt", &file_stats);
+
+    return file_stats.st_size;
+}
+
+int get_number_of_lines(char *buffer, int *buffer_size) {
+    int nlines = 0;
+    for(int i = 0; i < *buffer_size; ++i) {
+        if (buffer[i] == '\0') {
+            if (i > 0) {
+                if (buffer[i - 1] == '\n'){
+                    *buffer_size = i;
+                } else {
+                    nlines++;
+                    *buffer_size = i + 1;
+                }
+            }
+            break;
+        }
+        if (buffer[i] == '\n') {
+            nlines++;
+        }
+    }
+    return nlines;
 }
