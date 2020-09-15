@@ -2,13 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <sys\stat.h>
+#include <math.h>
+#include <locale.h>
+#include <ctype.h>
 
 #define EPSILON 1e-6
 #define MAXLINES 100000
 #define MAXLENGTH 1000
 
 
-//yay
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int compare_strings documentation
@@ -55,7 +58,6 @@ int main() {
     input = fopen("input.txt", "r");
     output = fopen("output.txt", "w");
 
-    char *lines[MAXLINES];
     int nlines = 0;
     if (input == NULL) {
         printf("Ошибка чтения файла input.txt\n");
@@ -63,52 +65,83 @@ int main() {
     }
 
     if (output == NULL) {
-        printf("Ошибка чтения файла output.txt\n", );
+        printf("Ошибка чтения файла output.txt\n");
         return 1;
     }
-    while(1) {
-        lines[nlines] = calloc(MAXLENGTH, sizeof(char));
 
-        if (fgets(lines[nlines], 256, input) == NULL) {
+    struct stat file_stats;
+    stat("input.txt", &file_stats);
+
+    int buffer_size = file_stats.st_size + 1;
+
+    char *buffer = calloc(buffer_size, sizeof(char));
+
+    fread(buffer, sizeof(char), buffer_size, input);
+    for(int i = 0; i < buffer_size; ++i) {
+        if (buffer[i] == '\0') {
+            if (i > 0) {
+                if (buffer[i - 1] == '\0'){
+                    buffer_size = i;
+                } else {
+                    nlines++;
+                    buffer_size = i + 1;
+                }
+            }
             break;
         }
-
-        //trim last '\n'
-        size_t l = strlen(lines[nlines]);
-        if (lines[nlines][l - 1] == '\n'){
-            lines[nlines][l - 1] = '\0';
+        if (buffer[i] == '\n') {
+            nlines++;
+            buffer[i] = '\0';
         }
-
-        ++nlines;
     }
+    char **lines = calloc(nlines + 1, sizeof(char*));
 
+    lines[0] = buffer;
+    int counter = 1;
+
+
+    for(int i = 0; i < buffer_size; ++i) {
+        if (buffer[i] == '\0') {
+            lines[counter++] = buffer + i + 1;
+        }
+        if (counter == nlines) {
+            break;
+        }
+    }
     quicksort(lines, 0, nlines, compare_strings);
 
-    for(int i = 0; i < nlines; ++i){
+    for(int i = 0; i < nlines; ++i) {
         fprintf(output, "%s\n", lines[i]);
-        free(lines[i]);
     }
 
     fclose(input);
     fclose(output);
-
     return 0;
 }
 
 
 int compare_strings(char *s1, char *s2) {
-    do {
-        if (*s1 < *s2)
-            return -1;
+    while (*s1 != '\0' && !isalpha(*s1)){
+        ++s1;
+    }
+    while (*s2 != '\0' && !isalpha(*s2)){
+        ++s1;
+    }
+    while (tolower(*s1) == tolower(*s2)) {
+        if (*s1 == '\0') {
+            return 0;
+        }
+        s1++; s2++;
+        while (*s1 != '\0' && !isalpha(*s1)){
+            ++s1;
+        }
+        while (*s2 != '\0' && !isalpha(*s2)){
+            ++s2;
+        }
+    }
 
-        if (*s1 > *s2)
-            return 1;
+    return *s1 - *s2;
 
-        s1++;
-        s2++;
-    } while (*s1 != '\0' && *s2 != '\0');
-
-    return 0;
 }
 
 void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *, char *)) {
