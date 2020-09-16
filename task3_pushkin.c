@@ -32,23 +32,20 @@ int main() {
 
     fread(buffer, sizeof(char), buffer_size, input);
 
-    int nlines = get_number_of_lines(buffer, &buffer_size);
+    int nlines = get_number_of_lines(buffer);
 
     char **lines = calloc(nlines + 1, sizeof(char*));
 
-    divide_into_lines(lines, nlines, buffer, buffer_size);
+    divide_into_lines(lines, nlines, buffer);
 
     quicksort(lines, 0, nlines, compare_strings);
 
     for(int i = 0; i < nlines; ++i) {
-        for(int j = 0; ; ++j) {
-            //fprintf(output, "%d\n", lines[i][j]);
-            if (lines[i][j] == '\0'){
-                break;
-            }
-        }
-        fprintf(output, "%s\n", lines[i]);
+        my_fprint(lines[i], output);
+        fprintf(output, "\n");
     }
+
+    free(buffer);
 
     fclose(input);
     fclose(output);

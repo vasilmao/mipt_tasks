@@ -1,21 +1,21 @@
 #include "task3_functions.h"
 
 int compare_strings(char *s1, char *s2) {
-    while (*s1 != '\0' && !isalpha(*s1)){
+    while (*s1 != '\n' && !isalpha(*s1)){
         ++s1;
     }
-    while (*s2 != '\0' && !isalpha(*s2)){
+    while (*s2 != '\n' && !isalpha(*s2)){
         ++s1;
     }
     while (tolower(*s1) == tolower(*s2)) {
-        if (*s1 == '\0') {
+        if (*s1 == '\n') {
             return 0;
         }
         s1++; s2++;
-        while (*s1 != '\0' && !isalpha(*s1)){
+        while (*s1 != '\n' && !isalpha(*s1)){
             ++s1;
         }
-        while (*s2 != '\0' && !isalpha(*s2)){
+        while (*s2 != '\n' && !isalpha(*s2)){
             ++s2;
         }
     }
@@ -64,16 +64,13 @@ int get_file_size(char* filename, int *file_size) {
     return result;
 }
 
-int get_number_of_lines(char *buffer, int *buffer_size) {
+int get_number_of_lines(char *buffer) {
     int nlines = 0;
-    for(int i = 0; i < *buffer_size; ++i) {
+    for(int i = 0; ; ++i) {
         if (buffer[i] == '\0') {
             if (i > 0) {
-                if (buffer[i - 1] == '\n'){
-                    *buffer_size = i;
-                } else {
+                if (buffer[i - 1] != '\n'){
                     nlines++;
-                    *buffer_size = i + 1;
                 }
             }
             break;
@@ -85,19 +82,24 @@ int get_number_of_lines(char *buffer, int *buffer_size) {
     return nlines;
 }
 
-void divide_into_lines(char **lines, int nlines, char *buffer, int buffer_size) {
+void divide_into_lines(char **lines, int nlines, char *buffer) {
     lines[0] = buffer;
     int counter = 1;
 
 
-    for(int i = 0; i < buffer_size; ++i) {
+    for(int i = 0;; ++i) {
         printf("%d %d\n", buffer[i], i);
-        if (buffer[i] == '\n') {
-            buffer[i] = '\0';
+        if (buffer[i] == '\n')  {
             if (counter == nlines) {
                 break;
             }
             lines[counter++] = buffer + i + 1;
         }
+    }
+}
+
+void my_fprint(char *string, FILE *output_file) {
+    for(int i = 0; string[i] != '\n'; ++i) {
+        fputc(string[i], output_file);
     }
 }

@@ -47,6 +47,7 @@ void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *,
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void swap(char **s1, char **s2);
 
+
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int get_file_size documentation
 //!
@@ -60,12 +61,32 @@ void swap(char **s1, char **s2);
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int get_file_size(char *filename, int *file_size);
 
+
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int get_number_of_lines documentation
 //!
-//! TODO: fix (changing buffer_size bruh)
+//! this function counts number of lines in string
+//!
+//! @param [in] char *buffer - string to count nlines
+//!
+//! @return number of lines
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int get_number_of_lines(char *buffer, int *buffer_size);
+int get_number_of_lines(char *buffer);
 
-void divide_into_lines(char **lines, int nlines, char *buffer, int buffer_size);
+
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! void divide_into_lines documentation
+//!
+//! this function divides buffer to lines
+//!
+//! @param [in] char **lines - array of char* - array to save lines
+//! @param [in] int nlines - number of lines to split
+//! @param [in] char *buffer - string to count nlines
+//!
+//! @return number of lines
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+void divide_into_lines(char **lines, int nlines, char *buffer);
+
+void my_fprint(char *string, FILE *output_file);
