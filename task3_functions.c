@@ -53,11 +53,15 @@ void swap(char **s1, char **s2) {
     *s2 = temp;
 }
 
-int get_file_size(char *filename) {
+int get_file_size(char* filename, int *file_size) {
     struct stat file_stats;
-    stat("input.txt", &file_stats);
-
-    return file_stats.st_size;
+    int result = stat(filename, &file_stats);
+    if (result != 0) {
+        return result;
+    }
+    //printf("%d kek\n", file_stats.st_ino);
+    *file_size = file_stats.st_size;
+    return result;
 }
 
 int get_number_of_lines(char *buffer, int *buffer_size) {

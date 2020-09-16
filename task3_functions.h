@@ -47,9 +47,25 @@ void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *,
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void swap(char **s1, char **s2);
 
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! int get_file_size documentation
+//!
+//! this function counts file size in bytes using <sys/stat.h> and writes the size into second argument
+//!
+//! @param [in] *filename - file name to count size
+//! @param [in] *file_size - pointer to integer, here file size will br written
+//!
+//! @return 0 if everything is correct, -1 if not (same return as stat() function from <sys/stat.h>)
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+int get_file_size(char *filename, int *file_size);
 
-int get_file_size(char *filename);
-
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! int get_number_of_lines documentation
+//!
+//! TODO: fix (changing buffer_size bruh)
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int get_number_of_lines(char *buffer, int *buffer_size);
 
 void divide_into_lines(char **lines, int nlines, char *buffer, int buffer_size);
