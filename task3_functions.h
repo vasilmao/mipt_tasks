@@ -89,4 +89,17 @@ int get_number_of_lines(char *buffer);
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void divide_into_lines(char **lines, int nlines, char *buffer);
 
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! void my_fprint documentation
+//!
+//! this function prints string to file (end of string is '\n', not '\0')
+//!
+//! @param [in] char *string - string
+//! @param [in] FILE *output_file - print to this file
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void my_fprint(char *string, FILE *output_file);
+
+int compare_from_end(char *s1, char *s2);
+
+void my_print(char *string);

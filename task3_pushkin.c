@@ -38,13 +38,16 @@ int main() {
 
     divide_into_lines(lines, nlines, buffer);
 
-    quicksort(lines, 0, nlines, compare_strings);
+    quicksort(lines, 0, nlines, compare_from_end);
 
     for(int i = 0; i < nlines; ++i) {
         my_fprint(lines[i], output);
         fprintf(output, "\n");
     }
 
+    //printf("%d\n", compare_from_end("bb,a\n", "b,.,ba\n"));
+
+    free(lines);
     free(buffer);
 
     fclose(input);
