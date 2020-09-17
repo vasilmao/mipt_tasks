@@ -3,21 +3,22 @@
 int compare_strings(char *s1, char *s2) {
     printf("comparing: ");
     for(int i = 0; *(s1 + i) != '\n'; ++i) {
-        printf("%d", s1[i]);
+        printf("%c", s1[i]);
     }
     printf(" and ");
     for(int i = 0; *(s2 + i) != '\n'; ++i) {
-        printf("%d", s2[i]);
+        printf("%c", s2[i]);
     }
     printf("\n");
     while (*s1 != '\n' && !isalpha(*s1)){
         ++s1;
     }
     while (*s2 != '\n' && !isalpha(*s2)){
-        ++s1;
+        ++s2;
     }
     while (tolower(*s1) == tolower(*s2)) {
         if (*s1 == '\n') {
+            //printf("0\n");
             return 0;
         }
         s1++; s2++;
@@ -28,17 +29,17 @@ int compare_strings(char *s1, char *s2) {
             ++s2;
         }
     }
-
+    //printf("%d\n", *s1 - *s2);
     return *s1 - *s2;
 
 }
 
 int compare_from_end(char *s1, char *s2) {
-    printf("comparing: \n");
+    /*printf("comparing: \n");
     my_print(s1);
     printf(" --- ");
     my_print(s2);
-    printf("\n");
+    printf("\n");*/
     int n1 = strlen(s1);
     int n2 = strlen(s2);
     char *s3 = calloc(n1, sizeof(char));
@@ -55,8 +56,6 @@ int compare_from_end(char *s1, char *s2) {
     }
     *(s3+cnt) = '\n';
 
-    my_print(s3);
-    printf(" ");
 
     for(int i = cnt - 1; i >= 0; --i) {
         *(s11 + (cnt - i - 1)) = *(s3 + i);
@@ -76,19 +75,17 @@ int compare_from_end(char *s1, char *s2) {
     }
     *(s4+cnt) = '\n';
 
-    my_print(s4);
-    printf("\n");
     for(int i = cnt - 1; i >= 0; --i) {
         *(s22 + (cnt - i - 1)) = *(s4 + i);
     }
 
     *(s22 + cnt) = '\n';
 
-    printf("reworked into: ");
+    /*printf("reworked into: ");
     my_print(s11);
     printf(" --- ");
     my_print(s22);
-    printf("\n");
+    printf("\n");*/
     free(s3);
     free(s4);
     int res = compare_strings(s11, s22);
@@ -98,6 +95,7 @@ int compare_from_end(char *s1, char *s2) {
 }
 
 void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *, char *)) {
+    //printf("%d %d\n", start, finish);
     assert(isfinite(start));
     assert(isfinite(finish));
     assert(cmp != NULL);
@@ -158,12 +156,13 @@ void divide_into_lines(char **lines, int nlines, char *buffer) {
     lines[0] = buffer;
     int counter = 1;
 
-
     for(int i = 0;; ++i) {
         //printf("%d %d\n", buffer[i], i);
+        if (counter == nlines) {
+            break;
+        }
         if (buffer[i] == '\n')  {
-            if (counter == nlines) {
-                break;
+            if (counter < nlines) {
             }
             lines[counter++] = buffer + i + 1;
         }
