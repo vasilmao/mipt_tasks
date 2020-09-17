@@ -1,7 +1,7 @@
 #include "task3_functions.h"
 
 int compare_strings(char *s1, char *s2) {
-    printf("comparing: ");
+    /*printf("comparing: ");
     for(int i = 0; *(s1 + i) != '\n'; ++i) {
         printf("%c", s1[i]);
     }
@@ -9,7 +9,7 @@ int compare_strings(char *s1, char *s2) {
     for(int i = 0; *(s2 + i) != '\n'; ++i) {
         printf("%c", s2[i]);
     }
-    printf("\n");
+    printf("\n");*/
     while (*s1 != '\n' && !isalpha(*s1)){
         ++s1;
     }
@@ -94,37 +94,109 @@ int compare_from_end(char *s1, char *s2) {
     return res;
 }
 
+
+int compare_reverse(char *s1, char *s2) {
+    /*printf("comparing: ");
+    my_print(s1);
+    printf(" --- ");
+    my_print(s2);
+    printf("\n"); */
+    /*printf("comparing: ");
+    for(int i = 0; *(s1 + i) != '\n'; ++i) {
+        printf("%d ", s1[i]);
+    }
+    printf(" --- ");
+    for(int i = 0; *(s2 + i) != '\n'; ++i) {
+        printf("%d ", s2[i]);
+    }
+    printf("\n");*/
+    int len1 = 0, len2 = 0;
+    while (*s1 != '\n') {
+        len1++;
+        s1++;
+    }
+    while (*s2 != '\n') {
+        len2++;
+        s2++;
+    }
+    int cnt = 0;
+    while (1) {
+        if (!isalpha(*s1) && len1 >= 0) {
+            s1--;
+            len1--;
+            continue;
+        }
+        if(!isalpha(*s2) && len2 >= 0) {
+            s2--;
+            len2--;
+            continue;
+        }
+        if (*s1 != *s2) {
+            return *s1 - *s2;
+        }
+
+        s1--;
+        len1--;
+        s2--;
+        len2--;
+        if (len1 < 0 || len2 < 0) {
+            if (len1 == 0 && len2 == 0) {
+                return 0;
+            } else {
+                return len1 - len2;
+            }
+        }
+        if (cnt > 100) {
+            printf("буе %d %d\n", len1, len2);
+        }
+    }
+}
+
 void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *, char *)) {
-    //printf("%d %d\n", start, finish);
+    printf(" + %d %d\n", start, finish);
     assert(isfinite(start));
     assert(isfinite(finish));
     assert(cmp != NULL);
     if (finish - start <= 1)
         return ;
     int m = (start + finish) / 2;
-    swap(&lines[m], &lines[finish - 1]);
+    if (m != finish - 1) {
+        swap(&lines[m], &lines[finish - 1]);
+    }
     int place_to_insert = start;
     for (int i = start; i < finish - 1; ++i) {
+        //printf("%d\n", i);
         if (cmp(lines[i], lines[finish - 1]) <= 0) {
+        //if (1){
             if (i != place_to_insert){
                 swap(&lines[i], &lines[place_to_insert]);
             }
             ++place_to_insert;
         }
     }
-    swap(&lines[finish - 1], &lines[place_to_insert]);
+    printf(" - %d %d\n", start, finish);
+    if (finish - 1 != place_to_insert) {
+        swap(&lines[finish - 1], &lines[place_to_insert]);
+    }
     quicksort(lines, start, place_to_insert, cmp);
     quicksort(lines, place_to_insert + 1, finish, cmp);
 }
 
 void swap(char **s1, char **s2) {
-    char *temp = NULL;
-    temp = *s1;
+    char *temp = *s1;
     *s1 = *s2;
     *s2 = temp;
 }
 
+void another_file_size(FILE *input, int *file_size) {
+    fseek(input, 0, SEEK_END);
+    *file_size = ftell(input);
+    fseek(input, 0, SEEK_SET);
+}
+
 int get_file_size(char* filename, int *file_size) {
+
+
     struct stat file_stats;
     int result = stat(filename, &file_stats);
     if (result != 0) {
@@ -145,7 +217,7 @@ int get_number_of_lines(char *buffer) {
             }
             break;
         }
-        if (buffer[i] == '\n') {
+        if (buffer[i] == '\n' && buffer[i + 1] != '\n') {
             nlines++;
         }
     }
@@ -157,14 +229,14 @@ void divide_into_lines(char **lines, int nlines, char *buffer) {
     int counter = 1;
 
     for(int i = 0;; ++i) {
-        //printf("%d %d\n", buffer[i], i);
+        //printf("%d - %d; %d %d\n", counter, nlines, buffer[i], i);
         if (counter == nlines) {
             break;
         }
         if (buffer[i] == '\n')  {
-            if (counter < nlines) {
+            if (buffer[i + 1] != '\n'){
+                lines[counter++] = buffer + i + 1;
             }
-            lines[counter++] = buffer + i + 1;
         }
     }
 }

@@ -103,3 +103,7 @@ void my_fprint(char *string, FILE *output_file);
 int compare_from_end(char *s1, char *s2);
 
 void my_print(char *string);
+
+int compare_reverse(char *s1, char *s2);
+
+void another_file_size(FILE * input, int * file_size);
