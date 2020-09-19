@@ -139,14 +139,15 @@ int is_equal_float(float a, float b) {
 //------------------------------
 
 void solve_quad_equation_tester() {
-    int n_tests = 6;
+    int n_tests = 7;
     float tests[MAXTESTS][3] = {
         {0, 0, 0},
         {1, 2, 3},
         {1, 4, 4},
         {0, 0, 3},
         {1, 1, 0},
-        {0, 5, 3}
+        {0, 5, 3},
+        {6, 32, 4.234}
     };
     float answers[MAXTESTS][3] = {
         {INFROOTS, 0, 0},
@@ -154,7 +155,8 @@ void solve_quad_equation_tester() {
         {1, -2, 0},
         {0, 0, 0},
         {2, 0, -1},
-        {1, -0.6, 0}
+        {1, -0.6, 0},
+        {2, -0.135769, -5.19756}
     };
 
 

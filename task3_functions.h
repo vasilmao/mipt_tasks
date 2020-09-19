@@ -12,7 +12,7 @@
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int compare_strings documentation
-//! compares two strings
+//! compares two strings, skipping everything that is not isalpha
 //!
 //! @param [in] char *s1 - pointer to first  string
 //! @param [in] char *s2 - pointer to second string
@@ -53,13 +53,13 @@ void swap(char **s1, char **s2);
 //!
 //! this function counts file size in bytes using <sys/stat.h> and writes the size into second argument
 //!
-//! @param [in] *filename - file name to count size
-//! @param [in] *file_size - pointer to integer, here file size will br written
+//! @param [in] FILE *file - file to count size
+//! @param [in] int *file_size - pointer to integer, here file size will br written
 //!
 //! @return 0 if everything is correct, -1 if not (same return as stat() function from <sys/stat.h>)
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int get_file_size(char *filename, int *file_size);
+void get_file_size(FILE *input, int *file_size);
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
@@ -100,10 +100,24 @@ void divide_into_lines(char **lines, int nlines, char *buffer);
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void my_fprint(char *string, FILE *output_file);
 
-int compare_from_end(char *s1, char *s2);
-
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! void my_print documentation
+//!
+//! this function prints string to stdout (end of string is '\n', not '\0')
+//!
+//! @param [in] char *string - string
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void my_print(char *string);
 
-int compare_reverse(char *s1, char *s2);
-
-void another_file_size(FILE * input, int * file_size);
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! int compare_strings documentation
+//! compares two strings from end to start, skipping everything that is not isalpha
+//!
+//! @param [in] char *s1 - pointer to first  string
+//! @param [in] char *s2 - pointer to second string
+//!
+//! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+int compare_strings_from_end(char *s1, char *s2);

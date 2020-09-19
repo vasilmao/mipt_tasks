@@ -3,3 +3,4 @@ input.txt
 output.txt
 *.bat
 task3_functions.h.gch
+*.o

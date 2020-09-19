@@ -31,7 +31,7 @@ int main() {
 
     int buffer_size = 0;
     //result = get_file_size("input.txt", &buffer_size);
-    another_file_size(input, &buffer_size);
+    get_file_size(input, &buffer_size);
     //buffer_size *= 2;
     buffer_size++;
 
