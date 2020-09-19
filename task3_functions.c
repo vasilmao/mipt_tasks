@@ -1,5 +1,6 @@
 #include "task3_functions.h"
 
+
 int compare_strings(char *s1, char *s2) {
     while (*s1 != '\n' && !isalpha(*s1)){
         ++s1;

@@ -30,13 +30,10 @@ int main() {
     }
 
     int buffer_size = 0;
-    //result = get_file_size("input.txt", &buffer_size);
     get_file_size(input, &buffer_size);
-    //buffer_size *= 2;
     buffer_size++;
 
     printf("perviy - %d\n", buffer_size);
-    //fprintf(output, "%d\n", buffer_size);
 
     if (result != 0) {
         printf("Не удалось определить размер файла input.txt");
@@ -46,35 +43,20 @@ int main() {
     char *buffer = calloc(buffer_size, sizeof(char));
     result = fread(buffer, sizeof(char), buffer_size, input);
     buffer_size = result;
-    printf("%d\n", result);
     buffer[buffer_size] = '\0';
-    //my_kekprint(buffer, output, buffer_size);
     int nlines = get_number_of_lines(buffer);
-    printf("%d\n", nlines);
     char **lines = calloc(nlines + 1, sizeof(char*));
-    //printf("%d\n", nlines);
-    printf("YOY2\n");
     divide_into_lines(lines, nlines, buffer);
-    //fprintf(output, "%s\n", buffer);
-
-    //printf("%d\n", nlines);
 
 
 
-    printf("YOY1\n");
-    quicksort(lines, 0, nlines, compare_reverse);
-    printf("YOY\n");
-    //printf("\n%d\n", nlines);
-
-    //my_print(lines[nlines - 1]);
+    quicksort(lines, 0, nlines, compare_strings_from_end);
 
 
     for(int i = 0; i < nlines; ++i) {
         my_fprint(lines[i], output);
         fprintf(output, "\n");
     }
-
-    //printf("%d\n", compare_from_end("bb,a\n", "b,.,ba\n"));
 
     free(lines);
     free(buffer);
