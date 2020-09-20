@@ -1,15 +1,5 @@
 #include "task3_functions.h"
 
-void my_kekprint(char *s, FILE *file, int size) {
-    int cnt = 0;
-    //for(int i = 0; i < size; ++i){
-    while (*s != '\0') {
-        fprintf(file, "%c", *s);
-        s++;
-        cnt++;
-    }
-    printf("%d\n", cnt);
-}
 
 int main() {
 
