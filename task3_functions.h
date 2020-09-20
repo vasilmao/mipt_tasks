@@ -32,7 +32,7 @@ int compare_strings(char *s1, char *s2);
 //! @note function uses constant MAXLINES = 10^5
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *, char *));
+//void quicksort(char *lines[], int start, int finish, int (*cmp) (char *, char *));
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void swap documentation
@@ -119,3 +119,11 @@ void my_print(char *string);
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int compare_strings_from_end(char *s1, char *s2);
+
+int compare_strings_void(void *string1, void *string2);
+
+int compare_strings_from_end_void(void *string1, void *string2);
+
+void quicksort_1(void *lines[], int start, int finish, int (*cmp) (void *x1, void *x2), void (*swap_quicksort) (void *lines, int x1, int x2));
+
+void swap_lines(void *lines, int x1, int x2);

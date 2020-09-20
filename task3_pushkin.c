@@ -23,8 +23,6 @@ int main() {
     get_file_size(input, &buffer_size);
     buffer_size++;
 
-    printf("perviy - %d\n", buffer_size);
-
     if (result != 0) {
         printf("Не удалось определить размер файла input.txt");
         return 1;
@@ -38,9 +36,7 @@ int main() {
     char **lines = calloc(nlines + 1, sizeof(char*));
     divide_into_lines(lines, nlines, buffer);
 
-
-
-    quicksort(lines, 0, nlines, compare_strings_from_end);
+    quicksort((void **)lines, 0, nlines, compare_strings_from_end_void, swap_lines);
 
 
     for(int i = 0; i < nlines; ++i) {

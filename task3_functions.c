@@ -20,8 +20,20 @@ int compare_strings(char *s1, char *s2) {
             ++s2;
         }
     }
-    return *s1 - *s2;
+    return tolower(*s1) - tolower(*s2);
 
+}
+
+int compare_strings_void(void *string1, void *string2) {
+    char *s1 = *((char **) string1);
+    char *s2 = *((char **) string2);
+    return compare_strings(s1, s2);
+}
+
+int compare_strings_from_end_void(void *string1, void *string2) {
+    char *s1 = *((char **) string1);
+    char *s2 = *((char **) string2);
+    return compare_strings_from_end(s1, s2);
 }
 
 
@@ -47,8 +59,8 @@ int compare_strings_from_end(char *s1, char *s2) {
             len2--;
             continue;
         }
-        if (*s1 != *s2) {
-            return *s1 - *s2;
+        if (tolower(*s1) != tolower(*s2)) {
+            return tolower(*s1) - tolower(*s2);
         }
 
         s1--;
@@ -65,31 +77,38 @@ int compare_strings_from_end(char *s1, char *s2) {
     }
 }
 
-void quicksort(char *lines[], int start, int finish, int (*cmp) (char *, char *)) {
+void quicksort(void *lines[], int start, int finish, int (*cmp)(void *, void *), void (*swap_quicksort)(void *lines, int x1, int x2)){
     assert(isfinite(start));
     assert(isfinite(finish));
     assert(cmp != NULL);
+    assert(lines != NULL);
     if (finish - start <= 1)
         return ;
     int m = (start + finish) / 2;
     if (m != finish - 1) {
-        swap(&lines[m], &lines[finish - 1]);
+        swap_quicksort(lines, m, finish - 1);
     }
     int place_to_insert = start;
     for (int i = start; i < finish - 1; ++i) {
-        if (cmp(lines[i], lines[finish - 1]) <= 0) {
+        if (cmp(lines + i, lines + (finish - 1)) <= 0) {
             if (i != place_to_insert){
-                swap(&lines[i], &lines[place_to_insert]);
+                swap_quicksort(lines, i, place_to_insert);
             }
             ++place_to_insert;
         }
     }
     if (finish - 1 != place_to_insert) {
-        swap(&lines[finish - 1], &lines[place_to_insert]);
+        swap_quicksort(lines, finish - 1, place_to_insert);
     }
-    quicksort(lines, start, place_to_insert, cmp);
-    quicksort(lines, place_to_insert + 1, finish, cmp);
+    quicksort_1(lines, start, place_to_insert, cmp, swap_quicksort);
+    quicksort_1(lines, place_to_insert + 1, finish, cmp, swap_quicksort);
 }
+
+void swap_lines(void *lines, int x1, int x2) {
+
+    swap((char **) lines + x1, (char **) lines + x2);
+}
+
 
 void swap(char **s1, char **s2) {
     char *temp = *s1;
@@ -126,7 +145,6 @@ void divide_into_lines(char **lines, int nlines, char *buffer) {
     int counter = 1;
 
     for(int i = 0;; ++i) {
-        //printf("%d - %d; %d %d\n", counter, nlines, buffer[i], i);
         if (counter == nlines) {
             break;
         }
@@ -145,7 +163,7 @@ void my_fprint(char *string, FILE *output_file) {
 }
 
 void my_print(char *string) {
-    for(int i = 0; string[i] != '\n'; ++i) {
-        putc(string[i], stdout);
+    for(int i = 0; string[i] != '\n' && string[i] != '\0'; ++i) {
+        printf("%c", string[i]);
     }
 }
