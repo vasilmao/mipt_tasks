@@ -65,7 +65,7 @@ int compare_strings_from_end(char *s1, char *s2) {
     }
 }
 
-void quicksort(char *lines[MAXLINES], int start, int finish, int (*cmp) (char *, char *)) {
+void quicksort(char *lines[], int start, int finish, int (*cmp) (char *, char *)) {
     assert(isfinite(start));
     assert(isfinite(finish));
     assert(cmp != NULL);
