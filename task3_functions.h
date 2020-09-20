@@ -7,8 +7,6 @@
 #include <locale.h>
 #include <ctype.h>
 #define EPSILON 1e-6
-#define MAXLINES 100000
-#define MAXLENGTH 1000
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int compare_strings documentation
