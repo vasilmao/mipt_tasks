@@ -7,37 +7,17 @@
 #include <locale.h>
 #include <ctype.h>
 
+struct my_string {
+    char *str;
+    int length;
+} ;
+
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void test_everything documentation
 //! runs all test functions
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void test_everything();
-
-//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! int compare_strings_void documentation
-//! converts void *array to (char **) and compares arr[i] and arr[j]
-//!
-//! @param [in] void *array - array of strings
-//! @param [in] int i - index of first string
-//! @param [in] int j - index of second string
-//!
-//! @return returns result of compare_strings()
-//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_strings_void(void *array, int i, int j);
-
-
-//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! int compare_strings_void documentation
-//! converts void *array to (char **) and compares arr[i] and arr[j] from end
-//!
-//! @param [in] void *array - array of strings
-//! @param [in] int i - index of first string
-//! @param [in] int j - index of second string
-//!
-//! @return returns result of compare_strings_from end()
-//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_strings_from_end_void(void *array, int i, int j);
+int test_everything();
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
@@ -54,21 +34,59 @@ int compare_strings(char *s1, char *s2);
 
 void test_compare_strings();
 
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! int compare_my_strings documentation
+//! compares two my_strings, just returns result of compare_strings function
+//!
+//! @param [in] void *array - array
+//! @param [in] int i - first index
+//! @param [in] int j - second index
+//!
+//! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+int compare_my_strings(void *array, int i, int j);
+
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int compare_strings documentation
 //! compares two strings from end to start, skipping everything that is not isalpha
 //!
 //! @param [in] char *s1 - pointer to first  string
+//! @param [in] int len1 - length  of first  string
 //! @param [in] char *s2 - pointer to second string
+//! @param [in] int len2 - length  of second string
 //!
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_strings_from_end(char *s1, char *s2);
+int compare_strings_from_end(char *s1, int len1, char *s2, int len2);
 
 void test_compare_strings_from_end();
 
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! int compare_my_strings_from_end documentation
+//! compares two my_strings, just returns result of compare_strings_from_end function
+//!
+//! @param [in] void *array - array
+//! @param [in] int i - first index
+//! @param [in] int j - second index
+//!
+//! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+int compare_my_strings_from_end(void *array, int i, int j);
+
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! void swap_my_strings documentation
+//! swaps to my_string elements in array
+//!
+//! @param [in] void *array - array
+//! @param [in] int i - first  index to swap
+//! @param [in] int j - second index to swap
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+void swap_my_strings(void *array, int i, int j);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void quicksort documentation
@@ -83,42 +101,18 @@ void test_compare_strings_from_end();
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void quicksort(void *array, int start, int finish, int (*cmp)(void *array, int i, int j), void (*swap_quicksort)(void *array, int i, int j));
 
-//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! void swap_lines documentation
-//! this function converts lines from (void *) to (char **) and ...
-//! ... and swaps lines[i] and lines[j] by calling swap_lines function
-//!
-//! @param [in] void *lines - array of strings
-//! @param [in] int i - index of first string to swap
-//! @param [in] int j - index of second string to swap
-//!
-//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void swap_lines(void *lines, int i, int j);
-
-//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! void swap_strings documentation
-//! this function swaps two strings by pointers
-//!
-//! @param [in] **s1 - pointer on first  pointer on char
-//! @param [in] **s2 - pointer on second pointer on char
-//!
-//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void swap_strings(char **s1, char **s2);
-
-void test_swap_strings();
-
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int get_file_size documentation
 //! this function counts file size in bytes using fseek and ftell
 //!
-//! @param [in] FILE *file - file to count size
-//! @param [in] int *file_size - pointer to integer, here file size will br written
+//! @param [in] char *filename - file to count size
 //!
+//! @return file size
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int get_file_size(FILE *input);
+int get_file_size(char *filename);
 
-void  test_get_file_size();
+void test_get_file_size();
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
@@ -140,13 +134,13 @@ void test_get_number_of_lines();
 //! void divide_lines documentation
 //! this function divides buffer to lines
 //!
-//! @param [in] char **lines - array of char* - array to save lines
+//! @param [in] struct my_string *lines - array of my_string to save lines
 //! @param [in] int nlines - number of lines to split
 //! @param [in] char *buffer - string to count nlines
 //!
 //! @it skips empty lines like get_number_of_lines function
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void divide_lines(char **lines, int nlines, char *buffer);
+void divide_lines(struct my_string *lines, int nlines, char *buffer);
 
 void test_divide_lines();
 

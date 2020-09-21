@@ -25,31 +25,18 @@ int compare_strings(char *s1, char *s2) {
     return tolower(*s1) - tolower(*s2);
 }
 
-int compare_strings_void(void *array, int i, int j) {
-    assert(array);
-    assert(i >= 0);
-    assert(j >= 0);
 
-    char *s1 = *(((char **) array) + i);
-    char *s2 = *(((char **) array) + j);
-    return compare_strings(s1, s2);
-}
-
-
-int compare_strings_from_end(char *s1, char *s2) {
+int compare_strings_from_end(char *s1, int len1, char *s2, int len2) {
     assert(s1);
     assert(s2);
+    assert(len1 >= 0);
+    assert(len2 >= 0);
 
-    int len1 = 0, len2 = 0;
-    while (*s1 != '\n' && *s1 != '\0') {
-        len1++;
-        s1++;
-    }
-    while (*s2 != '\n' && *s2 != '\0') {
-        len2++;
-        s2++;
-    }
     int cnt = 0;
+    s1 += len1 - 1;
+    s2 += len2 - 1;
+    len1--;
+    len2--;
     while (1) {
         if (!isalpha(*s1) && len1 >= 0) {
             s1--;
@@ -79,32 +66,56 @@ int compare_strings_from_end(char *s1, char *s2) {
     }
 }
 
-int compare_strings_from_end_void(void *array, int i, int j) {
+int compare_my_strings(void *array, int i, int j) {
+    assert(array);
+    assert(i >= 0);
+    assert(j >= 0);
+    return compare_strings(((struct my_string *)array + i)->str, ((struct my_string *)array + j) -> str);
+}
+
+int compare_my_strings_from_end(void *array, int i, int j) {
+    assert(array);
+    assert(i >= 0);
+    assert(j >= 0);
+    struct my_string *s1 = ((struct my_string *)array + i);
+    struct my_string *s2 = ((struct my_string *)array + j);
+    return compare_strings_from_end(s1->str, s1->length, s2 -> str, s2->length);
+}
+
+void swap_my_strings(void *array, int i, int j) {
     assert(array);
     assert(i >= 0);
     assert(j >= 0);
 
-    char *s1 = *(((char **) array) + i);
-    char *s2 = *(((char **) array) + j);
-    return compare_strings_from_end(s1, s2);
+    struct my_string *s1 = ((struct my_string *)array + i);
+    struct my_string *s2 = ((struct my_string *)array + j);
+    struct my_string tmp = *s1;
+    *s1 = *s2;
+    *s2 = tmp;
 }
 
-void quicksort(void *array, int start, int finish, int (*cmp)(void *arrray, int i, int j), void (*swap_quicksort)(void *array, int i, int j)){
-    assert(isfinite(start));
-    assert(isfinite(finish));
+void quicksort(void *array, int start, int finish, int (*cmp)(void *array, int i, int j), void (*swap_quicksort)(void *array, int i, int j)){
+    assert(start >= 0);
+    assert(finish >= 0);
     assert(cmp);
     assert(swap_quicksort);
     assert(array);
 
     if (finish - start <= 1)
         return ;
+    if (finish - start == 2) {
+        if (cmp(array, start, finish - 1) > 0) {
+            swap_quicksort(array, start, finish - 1);
+        }
+        return ;
+    }
     int m = (start + finish) / 2;
     if (m != finish - 1) {
         swap_quicksort(array, m, finish - 1);
     }
     int place_to_insert = start;
     for (int i = start; i < finish - 1; ++i) {
-        if (cmp(array, i, (finish - 1)) <= 0) {
+        if (cmp(array, i, (finish - 1)) < 0) {
             if (i != place_to_insert){
                 swap_quicksort(array, i, place_to_insert);
             }
@@ -118,31 +129,16 @@ void quicksort(void *array, int start, int finish, int (*cmp)(void *arrray, int 
     quicksort(array, place_to_insert + 1, finish, cmp, swap_quicksort);
 }
 
-void swap_lines(void *lines, int i, int j) {
-    assert(lines);
-    assert(i >= 0);
-    assert(j >= 0);
 
-    swap_strings((char **) lines + i, (char **) lines + j);
-}
-
-
-void swap_strings(char **s1, char **s2) {
-    assert(s1);
-    assert(s2);
-
-    char *temp = *s1;
-    *s1 = *s2;
-    *s2 = temp;
-}
-
-int get_file_size(FILE *input) {
-    assert(input);
-
-    fseek(input, 0, SEEK_END);
-    int file_size = ftell(input);
-    fseek(input, 0, SEEK_SET);
-    return file_size;
+int get_file_size(char *filename) {
+    assert(filename);
+    struct stat filestats;
+    int res = stat(filename, &filestats);
+    if (res != 0){
+        printf("Не удалось получить размер файла %s\n", filename);
+        assert(res != 0);
+    }
+    return filestats.st_size;
 }
 
 int get_number_of_lines(char *buffer) {
@@ -170,22 +166,24 @@ int get_number_of_lines(char *buffer) {
     return nlines;
 }
 
-void divide_lines(char **lines, int nlines, char *buffer) {
+void divide_lines(struct my_string *lines, int nlines, char *buffer) {
     assert(lines);
     assert(nlines >= 0);
     assert(buffer);
 
-    lines[0] = buffer;
+    lines[0].str = buffer;
     int counter = 1;
 
     for (int i = 0;; ++i) {
-        if (counter == nlines) {
-            break;
-        }
-        if (buffer[i] == '\n')  {
-            //skipping empty lines
+        if (buffer[i] == '\n' || buffer[i] == '\0')  {
+            if (counter == nlines) {
+                lines[counter - 1].length = buffer + i - lines[counter - 1].str;
+                break;
+            }
             if (buffer[i + 1] != '\n' && buffer[i + 1] != '\0'){
-                lines[counter++] = buffer + i + 1;
+                lines[counter].str = buffer + i + 1;
+                lines[counter - 1].length = lines[counter].str - lines[counter - 1].str;
+                counter++;
             }
         }
     }
@@ -212,15 +210,17 @@ void my_print(char *string) {
 
 //TESTS
 
-void test_everything() {
+
+
+int test_everything() {
     printf("Начинаем тестирование...\n");
     test_compare_strings();
     test_compare_strings_from_end();
-    test_swap_strings();
     test_get_file_size();
     test_get_number_of_lines();
     test_divide_lines();
     printf("Все корректно!\n");
+    return 2;
 }
 
 
@@ -241,7 +241,7 @@ void test_compare_strings() {
     for (int i = 0; i < n_tests; ++i) {
         int res = compare_strings(tests[i][0], tests[i][1]);
         if (res != answers[i]) {
-            printf("Ошибка при тестировании!\nФункция compare_everything\ninput strings: %s\n%s\nожидаемый результат: %d\n полученный результат: %d", tests[i][0], tests[i][1], answers[i], res);
+            printf("Ошибка при тестировании!\nФункция compare_everything\ninput strings: %s\n%s\nожидаемый результат: %d\n полученный результат: %d\n", tests[i][0], tests[i][1], answers[i], res);
         }
         assert(answers[i] == res);
     }
@@ -262,33 +262,11 @@ void test_compare_strings_from_end() {
     };
 
     for (int i = 0; i < n_tests; ++i) {
-        int res = compare_strings_from_end(tests[i][0], tests[i][1]);
+        int res = compare_strings_from_end(tests[i][0], strlen(tests[i][0]), tests[i][1], strlen(tests[i][1]));
         if (res != answers[i]) {
-            printf("Ошибка при тестировании!\nФункция compare_everything\ninput strings: %s\n%s\nОжидаемый результат: %d\nПолученный результат: %d", tests[i][0], tests[i][1], answers[i], res);
+            printf("Ошибка при тестировании!\nФункция compare_strings_from_end\ninput strings: %s\n%s\nОжидаемый результат: %d\nПолученный результат: %d\n", tests[i][0], tests[i][1], answers[i], res);
         }
         assert(answers[i] == res);
-    }
-}
-
-void test_swap_strings() {
-    int n_tests = 2;
-    char *tests[][2] = {
-        {"abc", "def"},
-        {":^)","LOLOLOLOLOLOLOLOLOLOL"}
-    };
-
-    char *answers[][2] = {
-        {"def", "abc"},
-        {"LOLOLOLOLOLOLOLOLOLOL", ":^)"}
-    };
-    for (int i = 0; i < n_tests; ++i) {
-        swap_strings(&tests[i][0], &tests[i][1]);
-        int result1 = compare_strings(tests[i][0], answers[i][0]);
-        int result2 = compare_strings(tests[i][1], answers[i][1]);
-        if (!(result1 == 0) || !(result2 == 0)) {
-            printf("Ошибка при тестировании!\nФуникция swap_lines\nОжидаемый результат:\n%s\n%s\nПолученный результат:\n%s\n%s\n", answers[i][0], answers[i][1], tests[i][0], tests[i][1]);
-        }
-        assert(result1 == 0 && result2 == 0);
     }
 }
 
@@ -298,8 +276,7 @@ void test_get_file_size() {
     fprintf(file, "abcde");
     int answer = 5;
     fclose(file);
-    file = fopen("FILE_SIZE_TESTER.txt", "r");
-    int result = get_file_size(file);
+    int result = get_file_size("FILE_SIZE_TESTER.txt");
     if (result != answer) {
         printf("Ошибка при тестировании!\nФуникция get_file_size\nОжидаемый результат: %d\nПолученный результат: %d\n", answer, result);
     }
@@ -334,32 +311,18 @@ void test_divide_lines() {
         "b\n",
         "c\n"
     };
-    char *lines[nlines];
-    for (int i = 0; i < nlines; ++i) {
-        lines[i] = calloc(strlen(answer[i]) + 1, sizeof(char));
-    }
+    struct my_string *lines = calloc(nlines, sizeof(struct my_string));
 
     divide_lines(lines, nlines, test);
 
 
     for (int i = 0; i < nlines; ++i) {
-        int result = compare_strings(answer[i], lines[i]);
+        int result = compare_strings(answer[i], lines[i].str);
         if (result != 0) {
             printf("Ошибка при тестировании!\nФуникция divide_lines\nCтрока номер%d\nОжидаемая строка:\n", i);
             my_print(answer[i]);
             printf("\nПолученная строка:\n");
-            my_print(lines[i]);
-            printf("\n");
-        }
-        assert(result == 0);
-    }
-    for(int i = 0; i < nlines; ++i) {
-        int result = compare_strings(test[i], answer[i]);
-        if (result != 0) {
-            printf("Ошибка при тестировании!\nФуникция quicksort (удачи с дебагом)\nCтрока номер%d\nОжидаемая строка:\n", i);
-            my_print(answer[i]);
-            printf("\nПолучанная строка:\n");
-            my_print(test[i]);
+            my_print(lines[i].str);
             printf("\n");
         }
         assert(result == 0);
