@@ -220,6 +220,7 @@ void test_everything() {
     test_get_file_size();
     test_get_number_of_lines();
     test_divide_lines();
+    test_quicksort();
     printf("Все корректно!\n");
 }
 
@@ -352,7 +353,36 @@ void test_divide_lines() {
         }
         assert(result == 0);
     }
-    for(int i = 0; i < nlines; ++i) {
+    for (int i = 0; i < nlines; ++i) {
         free(lines[i]);
     }
+}
+
+void test_quicksort() {
+    int nlines = 3;
+    char *test[] = {
+        "b",
+        "a",
+        "c"
+    };
+    char *answer[] = {
+        "a",
+        "b",
+        "c"
+    };
+
+    quicksort(test, 0, nlines, compare_strings_void, swap_lines);
+
+    for(int i = 0; i < nlines; ++i) {
+        int result = compare_strings(test[i], answer[i]);
+        if (result != 0) {
+            printf("Ошибка при тестировании!\nФуникция quicksort (удачи с дебагом)\nCтрока номер%d\nОжидаемая строка:\n", i);
+            my_print(answer[i]);
+            printf("\nПолучанная строка:\n");
+            my_print(test[i]);
+            printf("\n");
+        }
+        assert(result == 0);
+    }
+
 }
