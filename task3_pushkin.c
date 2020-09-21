@@ -5,7 +5,8 @@ int main(int argc, char *argv[]) {
     if (argc > 1) {
         for (int i = 1; i < argc; i++) {
             if (compare_strings(argv[i], "--test") == 0) {
-                
+                test_everything();
+                return 0;
             }
         }
     }
@@ -38,7 +39,7 @@ int main(int argc, char *argv[]) {
     int nlines = get_number_of_lines(buffer);
     char **lines = calloc(nlines + 1, sizeof(char*));
 
-    divide_into_lines(lines, nlines, buffer);
+    divide_lines(lines, nlines, buffer);
 
     quicksort(lines, 0, nlines, compare_strings_from_end_void, swap_lines);
 
