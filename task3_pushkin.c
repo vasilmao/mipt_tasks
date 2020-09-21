@@ -36,7 +36,7 @@ int main() {
     char **lines = calloc(nlines + 1, sizeof(char*));
     divide_into_lines(lines, nlines, buffer);
 
-    quicksort((void **)lines, 0, nlines, compare_strings_from_end_void, swap_lines);
+    quicksort(lines, 0, nlines, compare_strings_void, swap_lines);
 
 
     for(int i = 0; i < nlines; ++i) {

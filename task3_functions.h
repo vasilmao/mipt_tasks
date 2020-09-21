@@ -6,6 +6,7 @@
 #include <math.h>
 #include <locale.h>
 #include <ctype.h>
+
 #define EPSILON 1e-6
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
@@ -22,17 +23,17 @@ int compare_strings(char *s1, char *s2);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void quicksort documentation
-//! sorts part of array of strings [start, finish) - including start, excluding finish
+//! sorts part of array of anything you want if you have comporator and swapper for this, [start, finish) - including start, excluding finish
 //!
-//! @param [in] char *linrs[MAXLINES] pointer to char array
+//! @param [in] void *array - array of what you want
 //! @param [in] int start - first index to sort
 //! @param [in] int last - second index to sort (excluding)
-//! @param [in] int (*cmp) (char *, char *) - comparatort
-//!
+//! @param [in] int (*cmp) (void *arr, int i, int j) - compare arr[i] and arr[j] (write by yourself);
+//! @param [in] void (*swap_quicksort)(void *array, int i, int j)) - swap array[i] and array[j]
 //! @note function uses constant MAXLINES = 10^5
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//void quicksort(char *lines[], int start, int finish, int (*cmp) (char *, char *));
+void quicksort(void *array, int start, int finish, int (*cmp)(void *array, int i, int j), void (*swap_quicksort)(void *array, int i, int j));
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void swap documentation
@@ -120,10 +121,8 @@ void my_print(char *string);
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int compare_strings_from_end(char *s1, char *s2);
 
-int compare_strings_void(void *string1, void *string2);
+int compare_strings_void(void *array, int i, int j);
 
-int compare_strings_from_end_void(void *string1, void *string2);
-
-void quicksort_1(void *lines[], int start, int finish, int (*cmp) (void *x1, void *x2), void (*swap_quicksort) (void *lines, int x1, int x2));
+int compare_strings_from_end_void(void *array, int i, int j);
 
 void swap_lines(void *lines, int x1, int x2);

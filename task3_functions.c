@@ -24,15 +24,15 @@ int compare_strings(char *s1, char *s2) {
 
 }
 
-int compare_strings_void(void *string1, void *string2) {
-    char *s1 = *((char **) string1);
-    char *s2 = *((char **) string2);
+int compare_strings_void(void *array, int i, int j) {
+    char *s1 = *(((char **) array) + i);
+    char *s2 = *(((char **) array) + j);
     return compare_strings(s1, s2);
 }
 
-int compare_strings_from_end_void(void *string1, void *string2) {
-    char *s1 = *((char **) string1);
-    char *s2 = *((char **) string2);
+int compare_strings_from_end_void(void *array, int i, int j) {
+    char *s1 = *(((char **) array) + i);
+    char *s2 = *(((char **) array) + j);
     return compare_strings_from_end(s1, s2);
 }
 
@@ -77,36 +77,35 @@ int compare_strings_from_end(char *s1, char *s2) {
     }
 }
 
-void quicksort(void *lines[], int start, int finish, int (*cmp)(void *, void *), void (*swap_quicksort)(void *lines, int x1, int x2)){
+void quicksort(void *array, int start, int finish, int (*cmp)(void *arrray, int i, int j), void (*swap_quicksort)(void *array, int i, int j)){
     assert(isfinite(start));
     assert(isfinite(finish));
     assert(cmp != NULL);
-    assert(lines != NULL);
+    assert(array != NULL);
     if (finish - start <= 1)
         return ;
     int m = (start + finish) / 2;
     if (m != finish - 1) {
-        swap_quicksort(lines, m, finish - 1);
+        swap_quicksort(array, m, finish - 1);
     }
     int place_to_insert = start;
     for (int i = start; i < finish - 1; ++i) {
-        if (cmp(lines + i, lines + (finish - 1)) <= 0) {
+        if (cmp(array, i, (finish - 1)) <= 0) {
             if (i != place_to_insert){
-                swap_quicksort(lines, i, place_to_insert);
+                swap_quicksort(array, i, place_to_insert);
             }
             ++place_to_insert;
         }
     }
     if (finish - 1 != place_to_insert) {
-        swap_quicksort(lines, finish - 1, place_to_insert);
+        swap_quicksort(array, finish - 1, place_to_insert);
     }
-    quicksort_1(lines, start, place_to_insert, cmp, swap_quicksort);
-    quicksort_1(lines, place_to_insert + 1, finish, cmp, swap_quicksort);
+    quicksort(array, start, place_to_insert, cmp, swap_quicksort);
+    quicksort(array, place_to_insert + 1, finish, cmp, swap_quicksort);
 }
 
-void swap_lines(void *lines, int x1, int x2) {
-
-    swap((char **) lines + x1, (char **) lines + x2);
+void swap_lines(void *lines, int i, int j) {
+    swap((char **) lines + i, (char **) lines + j);
 }
 
 
