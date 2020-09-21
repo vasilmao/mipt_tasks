@@ -1,6 +1,7 @@
 #include "task3_functions.h"
 
-int compare_strings(const char *s1, const char *s2) {
+
+int compare_strings(char *s1, char *s2) {
     assert(s1);
     assert(s2);
     while (*s1 != '\n' && *s1 != '\0' && !isalpha(*s1)){
@@ -8,9 +9,6 @@ int compare_strings(const char *s1, const char *s2) {
     }
     while (*s2 != '\n' && *s2 != '\0' && !isalpha(*s2)){
         ++s2;
-    }
-    if ((*s1 == '\n' || *s1 == '\0') && (*s2 == '\n' || *s2 == '\0')) {
-        return 0;
     }
     while (tolower(*s1) == tolower(*s2)) {
         if (*s1 == '\n' || *s1 == '\0') {
@@ -25,10 +23,6 @@ int compare_strings(const char *s1, const char *s2) {
         }
     }
     return tolower(*s1) - tolower(*s2);
-}
-
-int compare_my_strings(void *s1, void *s2) {
-    return compare_strings(((struct my_string *)s1)->str, ((struct my_string *)s2)->str);
 }
 
 int compare_strings_void(void *array, int i, int j) {
@@ -104,7 +98,6 @@ void quicksort(void *array, int start, int finish, int (*cmp)(void *arrray, int 
 
     if (finish - start <= 1)
         return ;
-
     int m = (start + finish) / 2;
     if (m != finish - 1) {
         swap_quicksort(array, m, finish - 1);
@@ -130,16 +123,9 @@ void swap_lines(void *lines, int i, int j) {
     assert(i >= 0);
     assert(j >= 0);
 
-    cyberswap(&(((struct my_string *)lines) + i), &(((struct my_string *)lines) +ji))
+    swap_strings((char **) lines + i, (char **) lines + j);
 }
 
-void cyberswap(struct my_string **s1, struct my_string **s2) {
-    assert(s1);
-    assert(s2);
-
-    struct my_string *temp = *s1;
-    *s1 = *s2
-}
 
 void swap_strings(char **s1, char **s2) {
     assert(s1);
@@ -184,30 +170,28 @@ int get_number_of_lines(char *buffer) {
     return nlines;
 }
 
-void divide_lines(my_string *lines, int nlines, char *buffer) {
+void divide_lines(char **lines, int nlines, char *buffer) {
     assert(lines);
     assert(nlines >= 0);
     assert(buffer);
 
-    lines[0].str = buffer;
+    lines[0] = buffer;
     int counter = 1;
 
     for (int i = 0;; ++i) {
-        if (buffer[i] == '\n' || buffer[i] == '\0')  {
-            if (counter == nlines) {
-                lines[counter - 1] = buffer + i + 1 - lines[counter - 1].str;
-                break;
-            }
+        if (counter == nlines) {
+            break;
+        }
+        if (buffer[i] == '\n')  {
+            //skipping empty lines
             if (buffer[i + 1] != '\n' && buffer[i + 1] != '\0'){
-                lines[counter].str = buffer + i + 1;
-                lines[counter - 1].length = lines[counter].str - lines[counter - 1].str;
-                counter++;
+                lines[counter++] = buffer + i + 1;
             }
         }
     }
 }
 
-void my_fprint(const char *string, FILE *output_file) {
+void my_fprint(char *string, FILE *output_file) {
     assert(string);
     assert(output_file);
 
@@ -216,7 +200,7 @@ void my_fprint(const char *string, FILE *output_file) {
     }
 }
 
-void my_print(const char *string) {
+void my_print(char *string) {
     assert(string);
     for (int i = 0; string[i] != '\n' && string[i] != '\0'; ++i) {
         putc(string[i], stdout);
@@ -372,9 +356,9 @@ void test_divide_lines() {
     for(int i = 0; i < nlines; ++i) {
         int result = compare_strings(test[i], answer[i]);
         if (result != 0) {
-            printf("Ошибка при тестировании!\nФункция quicksort (удачи с дебагом)\nCтрока номер%d\nОжидаемая строка:\n", i);
+            printf("Ошибка при тестировании!\nФуникция quicksort (удачи с дебагом)\nCтрока номер%d\nОжидаемая строка:\n", i);
             my_print(answer[i]);
-            printf("\nПолученная строка:\n");
+            printf("\nПолучанная строка:\n");
             my_print(test[i]);
             printf("\n");
         }

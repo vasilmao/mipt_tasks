@@ -7,11 +7,6 @@
 #include <locale.h>
 #include <ctype.h>
 
-struct my_string {
-    char *str;
-    int length;
-}
-
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void test_everything documentation
 //! runs all test functions
@@ -30,8 +25,6 @@ void test_everything();
 //! @return returns result of compare_strings()
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int compare_strings_void(void *array, int i, int j);
-
-int compare_my_strings(void *s1, void *s2);
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
@@ -153,7 +146,7 @@ void test_get_number_of_lines();
 //!
 //! @it skips empty lines like get_number_of_lines function
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void divide_lines(struct my_string *lines, int nlines, char *buffer);
+void divide_lines(char **lines, int nlines, char *buffer);
 
 void test_divide_lines();
 
