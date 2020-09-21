@@ -2,6 +2,8 @@
 
 
 int compare_strings(char *s1, char *s2) {
+    assert(s1);
+    assert(s2);
     while (*s1 != '\n' && !isalpha(*s1)){
         ++s1;
     }
@@ -21,16 +23,23 @@ int compare_strings(char *s1, char *s2) {
         }
     }
     return tolower(*s1) - tolower(*s2);
-
 }
 
 int compare_strings_void(void *array, int i, int j) {
+    assert(array);
+    assert(i >= 0);
+    assert(j >= 0);
+
     char *s1 = *(((char **) array) + i);
     char *s2 = *(((char **) array) + j);
     return compare_strings(s1, s2);
 }
 
 int compare_strings_from_end_void(void *array, int i, int j) {
+    assert(array);
+    assert(i >= 0);
+    assert(j >= 0);
+
     char *s1 = *(((char **) array) + i);
     char *s2 = *(((char **) array) + j);
     return compare_strings_from_end(s1, s2);
@@ -38,6 +47,9 @@ int compare_strings_from_end_void(void *array, int i, int j) {
 
 
 int compare_strings_from_end(char *s1, char *s2) {
+    assert(s1);
+    assert(s2);
+
     int len1 = 0, len2 = 0;
     while (*s1 != '\n') {
         len1++;
@@ -54,7 +66,7 @@ int compare_strings_from_end(char *s1, char *s2) {
             len1--;
             continue;
         }
-        if(!isalpha(*s2) && len2 >= 0) {
+        if (!isalpha(*s2) && len2 >= 0) {
             s2--;
             len2--;
             continue;
@@ -80,8 +92,10 @@ int compare_strings_from_end(char *s1, char *s2) {
 void quicksort(void *array, int start, int finish, int (*cmp)(void *arrray, int i, int j), void (*swap_quicksort)(void *array, int i, int j)){
     assert(isfinite(start));
     assert(isfinite(finish));
-    assert(cmp != NULL);
-    assert(array != NULL);
+    assert(cmp);
+    assert(swap_quicksort);
+    assert(array);
+
     if (finish - start <= 1)
         return ;
     int m = (start + finish) / 2;
@@ -105,26 +119,44 @@ void quicksort(void *array, int start, int finish, int (*cmp)(void *arrray, int 
 }
 
 void swap_lines(void *lines, int i, int j) {
-    swap((char **) lines + i, (char **) lines + j);
+    assert(lines);
+    assert(i >= 0);
+    assert(j >= 0);
+
+    swap_strings((char **) lines + i, (char **) lines + j);
 }
 
 
-void swap(char **s1, char **s2) {
+void swap_strings(char **s1, char **s2) {
+    assert(s1);
+    assert(s2);
+
     char *temp = *s1;
     *s1 = *s2;
     *s2 = temp;
 }
 
-void get_file_size(FILE *input, int *file_size) {
+int get_file_size(FILE *input) {
+    assert(input);
+
     fseek(input, 0, SEEK_END);
-    *file_size = ftell(input);
+    int file_size = ftell(input);
     fseek(input, 0, SEEK_SET);
+    return file_size;
 }
 
 int get_number_of_lines(char *buffer) {
+    assert(buffer);
+
     int nlines = 0;
     for (int i = 0; ; ++i) {
+        if (buffer[i] == '\n' && buffer[i + 1] != '\n') {
+            nlines++;
+        }
+
         if (buffer[i] == '\0') {
+            //We met end of buffer. If the last symbol is \n than we have already counted that line.
+            //And if buffer doesnt end on \n than we must count the last line
             if (i > 0) {
                 if (buffer[i - 1] != '\n') {
                     nlines++;
@@ -132,23 +164,25 @@ int get_number_of_lines(char *buffer) {
             }
             break;
         }
-        if (buffer[i] == '\n' && buffer[i + 1] != '\n') {
-            nlines++;
-        }
     }
     return nlines;
 }
 
 void divide_into_lines(char **lines, int nlines, char *buffer) {
+    assert(lines);
+    assert(nlines >= 0);
+    assert(buffer);
+
     lines[0] = buffer;
     int counter = 1;
 
-    for(int i = 0;; ++i) {
+    for (int i = 0;; ++i) {
         if (counter == nlines) {
             break;
         }
         if (buffer[i] == '\n')  {
-            if (buffer[i + 1] != '\n'){
+            //skipping empty lines
+            if (buffer[i + 1] != '\n' && buffer[i + 1] != '\0'){
                 lines[counter++] = buffer + i + 1;
             }
         }
@@ -156,13 +190,17 @@ void divide_into_lines(char **lines, int nlines, char *buffer) {
 }
 
 void my_fprint(char *string, FILE *output_file) {
-    for(int i = 0; string[i] != '\n'; ++i) {
+    assert(string);
+    assert(output_file);
+
+    for (int i = 0; string[i] != '\n' && string[i] != '\0'; ++i) {
         fputc(string[i], output_file);
     }
 }
 
 void my_print(char *string) {
-    for(int i = 0; string[i] != '\n' && string[i] != '\0'; ++i) {
-        printf("%c", string[i]);
+    assert(string);
+    for (int i = 0; string[i] != '\n' && string[i] != '\0'; ++i) {
+        putc(string[i], stdout);
     }
 }
