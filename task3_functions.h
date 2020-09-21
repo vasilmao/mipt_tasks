@@ -7,8 +7,6 @@
 #include <locale.h>
 #include <ctype.h>
 
-#define EPSILON 1e-6
-
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void test_everything documentation
 //! runs all test functions
