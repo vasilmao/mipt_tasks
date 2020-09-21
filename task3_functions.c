@@ -357,6 +357,7 @@ void test_divide_lines() {
 
     divide_lines(lines, nlines, test);
 
+
     for (int i = 0; i < nlines; ++i) {
         int result = compare_strings(answer[i], lines[i]);
         if (result != 0) {
