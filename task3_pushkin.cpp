@@ -37,12 +37,13 @@ int main(int argc, char *argv[]) {
     //чтение в буфер |
     //----------------
     int buffer_size = 0;
-    char *buffer;
-    result = read_buffer(buffer, &buffer_size, input, input_filename);
-    if (result == READBUFFERERROR) {
-        printf("Ошибка чтения файла\n");
-        return 1;
-    }
+    buffer_size = get_file_size(input_filename) + 1;
+
+    char *buffer = (char *) calloc(buffer_size, sizeof(char));
+    buffer_size = fread(buffer, sizeof(char), buffer_size, input);
+    fclose(input);
+    //иногда fread не ставит '\0' в конце
+    buffer[buffer_size] = '\0';
     //-----------------------------
     //разделение буфера на строки |
     //-----------------------------
