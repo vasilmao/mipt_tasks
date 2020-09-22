@@ -7,12 +7,15 @@
 #include <locale.h>
 #include <ctype.h>
 
-extern const int ARGUMENTSERROR;
+extern const int  ARGUMENTSERROR;
+extern const int READBUFFERERROR;
 
 struct my_string {
     char *str;
     int length;
 } ;
+
+int read_buffer(char *buffer, int *buffer_size, FILE *input, char *input_filename);
 
 int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename);
 

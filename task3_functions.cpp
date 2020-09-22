@@ -1,6 +1,18 @@
 #include "task3_functions.h"
 
 const int ARGUMENTSERROR = 3;
+const int READBUFFERERROR = 4;
+
+int read_buffer(char *buffer, int *buffer_size, FILE *input, char *input_filename) {
+    *buffer_size = get_file_size(input_filename) + 1;
+
+    buffer = (char *) calloc(*buffer_size, sizeof(char));
+    *buffer_size = fread(buffer, sizeof(char), *buffer_size, input);
+    fclose(input);
+    //иногда fread не ставит '\0' в конце
+    buffer[*buffer_size] = '\0';
+    return 0;
+}
 
 int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename){
     if (argc > 1) {
@@ -363,7 +375,7 @@ void test_divide_lines() {
         "b\n",
         "c\n"
     };
-    struct my_string *lines = calloc(nlines, sizeof(struct my_string));
+    struct my_string *lines = (struct my_string *)calloc(nlines, sizeof(struct my_string));
 
     divide_lines(lines, nlines, test);
 
