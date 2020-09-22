@@ -1,5 +1,57 @@
 #include "task3_functions.h"
 
+const int ARGUMENTSERROR = 3;
+
+int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename){
+    if (argc > 1) {
+        for (int i = 1; i < argc; i++) {
+            if (strcmp(argv[i], "--test") == 0) {
+                return test_everything();
+            }
+            if (strcmp(argv[i], "--input") == 0) {
+                if (i == argc - 1){
+                    return ARGUMENTSERROR;
+                }
+                i++;
+                *input_filename = argv[i];
+            }
+
+            if (strcmp(argv[i], "-i") == 0) {
+                if (i == argc - 1){
+                    return ARGUMENTSERROR;
+                }
+                i++;
+                *input_filename = argv[i];
+            }
+
+            if (strcmp(argv[i], "--output") == 0) {
+                if (i == argc - 1){
+                    return ARGUMENTSERROR;
+                }
+                i++;
+                *output_filename = argv[i];
+            }
+
+            if (strcmp(argv[i], "-o") == 0) {
+                if (i == argc - 1){
+                    return ARGUMENTSERROR;
+                }
+                i++;
+                *output_filename = argv[i];
+            }
+        }
+    }
+
+    if (*input_filename == NULL) {
+        *input_filename = "input.txt";
+    }
+
+    if (*output_filename == NULL) {
+        *output_filename = "output.txt";
+    }
+    return 0;
+}
+
 
 int compare_strings(char *s1, char *s2) {
     assert(s1);

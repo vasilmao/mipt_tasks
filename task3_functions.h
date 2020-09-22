@@ -7,10 +7,14 @@
 #include <locale.h>
 #include <ctype.h>
 
+extern const int ARGUMENTSERROR;
+
 struct my_string {
     char *str;
     int length;
 } ;
+
+int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void test_everything documentation

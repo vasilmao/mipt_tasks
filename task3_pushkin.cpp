@@ -3,57 +3,6 @@
 //2 - норм тестировано
 //1 - ошибка аргументов
 
-int user_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename){
-    if (argc > 1) {
-        for (int i = 1; i < argc; i++) {
-            if (strcmp(argv[i], "--test") == 0) {
-                return test_everything();
-            }
-            if (strcmp(argv[i], "--input") == 0) {
-                if (i == argc - 1){
-                    return 1;
-                }
-                i++;
-                *input_filename = argv[i];
-            }
-
-            if (strcmp(argv[i], "-i") == 0) {
-                if (i == argc - 1){
-                    return 1;
-                }
-                i++;
-                *input_filename = argv[i];
-            }
-
-            if (strcmp(argv[i], "--output") == 0) {
-                if (i == argc - 1){
-                    return 1;
-                }
-                i++;
-                *output_filename = argv[i];
-            }
-
-            if (strcmp(argv[i], "-o") == 0) {
-                if (i == argc - 1){
-                    return 1;
-                }
-                i++;
-                *output_filename = argv[i];
-            }
-        }
-    }
-
-    if (*input_filename == NULL) {
-        *input_filename = "input.txt";
-    }
-
-    if (*output_filename == NULL) {
-        *output_filename = "output.txt";
-    }
-    return 0;
-}
-
-
 int main(int argc, char *argv[]) {
     char *input_filename = NULL;
     char *output_filename = NULL;
@@ -62,8 +11,8 @@ int main(int argc, char *argv[]) {
     //обработка аргументов командной строки |
     //---------------------------------------
 
-    result = user_cmd_arguments(argc, argv, &input_filename, &output_filename);
-    if (result == 1){
+    result = use_cmd_arguments(argc, argv, &input_filename, &output_filename);
+    if (result == ARGUMENTSERROR){
         printf("Ошибка при считывании аргументов командной строки\n");
         return 0;
     }
@@ -90,7 +39,7 @@ int main(int argc, char *argv[]) {
     int buffer_size = 0;
     buffer_size = get_file_size(input_filename) + 1;
 
-    char *buffer = calloc(buffer_size, sizeof(char));
+    char *buffer = (char *) calloc(buffer_size, sizeof(char));
     buffer_size = fread(buffer, sizeof(char), buffer_size, input);
     fclose(input);
     //иногда fread не ставит '\0' в конце
@@ -99,7 +48,7 @@ int main(int argc, char *argv[]) {
     //разделение буфера на строки |
     //-----------------------------
     int nlines = get_number_of_lines(buffer);
-    struct my_string *lines = calloc(nlines + 1, sizeof(struct my_string));
+    struct my_string *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
 
     divide_lines(lines, nlines, buffer);
 
