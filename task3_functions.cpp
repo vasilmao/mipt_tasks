@@ -363,7 +363,7 @@ void test_divide_lines() {
         "b\n",
         "c\n"
     };
-    struct my_string *lines = calloc(nlines, sizeof(struct my_string));
+    struct my_string *lines = (struct my_string *) calloc(nlines, sizeof(struct my_string));
 
     divide_lines(lines, nlines, test);
 
