@@ -39,6 +39,7 @@ int main(int argc, char *argv[]) {
     char *buffer;
     read_buffer(&buffer, &buffer_size, input_filename, input);
     fclose(input);
+    
     //-----------------------------
     //разделение буфера на строки |
     //-----------------------------
@@ -49,12 +50,6 @@ int main(int argc, char *argv[]) {
     //----------------
     //сортировка o_O |
     //----------------
-    /*if (sort_mode == SORT_DEFAULT){
-        quicksort(lines, 0, nlines, compare_my_strings, swap_my_strings);
-    } else if (sort_mode == SORT_FROM_END) {
-        quicksort(lines, 0, nlines, compare_my_strings_from_end, swap_my_strings);
-    }*/
-    printf("%d\n", sort_mode);
     if (sort_mode == SORT_DEFAULT){
         quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings, swap_my_strings);
     } else if (sort_mode == SORT_FROM_END) {

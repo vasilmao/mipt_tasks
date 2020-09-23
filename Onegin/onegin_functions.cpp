@@ -7,7 +7,6 @@ const int SORT_FROM_END = 1;
 
 void open_file(FILE **file, char *filename, const char *mode) {
     assert(file);
-    assert(*file);
     assert(filename);
     *file = fopen(filename, mode);
     if (*file == NULL) {
@@ -19,9 +18,7 @@ void open_file(FILE **file, char *filename, const char *mode) {
 int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename, int *sort_mode){
     assert(argv);
     assert(input_filename);
-    assert(*input_filename);
     assert(output_filename);
-    assert(*output_filename);
     if (argc > 1) {
         for (int i = 1; i < argc; i++) {
             if (strcmp(argv[i], "--test") == 0) {
