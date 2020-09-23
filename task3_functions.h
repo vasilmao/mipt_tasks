@@ -21,7 +21,7 @@ int compare_kek(void *x1, void *x2);
 
 void swap_kek(void *x1, void *x2);
 
-void quicksort_kek(void *array, int start, int finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2));
+void quicksort_kek(void *start, void *finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2));
 
 void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input);
 

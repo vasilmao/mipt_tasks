@@ -180,15 +180,12 @@ void swap_kek(void *x1, void *x2) {
     *s2 = tmp;
 }
 
-void quicksort_kek(void *array, int start, int finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2)){
-    assert(start >= 0);
-    assert(finish >= 0);
-    assert(cmp);
-    assert(swap_quicksort);
-    assert(array);
+void quicksort_kek(void *start, void *finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2)){
 
+    char *sta = (char *) start;
+    char *fin = (char *) finish;
     //printf("YAY1\n");
-    if (finish - start <= 1)
+    if (fin - sta <= 1)
         return ;
     /*if (finish - start == 2) {
         if (cmp(array, start, finish - 1) > 0) {
@@ -196,24 +193,24 @@ void quicksort_kek(void *array, int start, int finish, int elem_size, int (*cmp)
         }
         return ;
     }*/
-    int m = (start + finish) / 2;
-    if (m != finish - 1) {
-        swap_quicksort((void *)(((char *)array) + m * elem_size), (void *)(((char *)array) + (finish - 1) * elem_size));
+    char * m = sta + (fin - sta) / 2;
+    if (m != finish - elem_size) {
+        swap_quicksort((void *)m, (void *)(finish - elem_size));
     }
-    int place_to_insert = start;
-    for (int i = start; i < finish - 1; ++i) {
-        if (cmp((void *)(((char *)array) + i * elem_size), (void *)(((char *)array) + (finish - 1) * elem_size)) <= 0) {
+    char *place_to_insert = sta;
+    for (char *i = sta; i < fin - elem_size; i += elem_size) {
+        if (cmp((void *)i, (void *)(((char *)(fin - elem_size)))) <= 0) {
             if (i != place_to_insert){
-                swap_quicksort((void *)(((char *)array) + i * elem_size), (void *)(((char *)array) + place_to_insert * elem_size));
+                swap_quicksort((void *)i, (void *)place_to_insert);
             }
-            ++place_to_insert;
+            place_to_insert += elem_size;
         }
     }
-    if (finish - 1 != place_to_insert) {
-        swap_quicksort((void *)(((char *)array) + (finish - 1) * elem_size), (void *)(((char *)array) + place_to_insert * elem_size));
+    if (finish - elem_size != place_to_insert) {
+        swap_quicksort((void *)(fin - elem_size), (void *) place_to_insert);
     }
-    quicksort_kek(array, start, place_to_insert, elem_size, cmp, swap_quicksort);
-    quicksort_kek(array, place_to_insert + 1, finish, elem_size, cmp, swap_quicksort);
+    quicksort_kek(sta, place_to_insert, elem_size, cmp, swap_quicksort);
+    quicksort_kek(place_to_insert + elem_size, fin, elem_size, cmp, swap_quicksort);
 }
 
 void quicksort(void *array, int start, int finish, int (*cmp)(void *array, int i, int j), void (*swap_quicksort)(void *array, int i, int j)){
