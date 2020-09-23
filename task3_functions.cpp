@@ -1,14 +1,17 @@
 #include "task3_functions.h"
 
 const int ARGUMENTSERROR = 3;
+const int TESTCORRECT = 4;
+const int SORT_DEFAULT = 0;
+const int SORT_FROM_END = 1;
 
-int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename){
+int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename, int *sort_mode){
     if (argc > 1) {
         for (int i = 1; i < argc; i++) {
             if (strcmp(argv[i], "--test") == 0) {
                 return test_everything();
             }
-            if (strcmp(argv[i], "--input") == 0) {
+             else if (strcmp(argv[i], "--input") == 0) {
                 if (i == argc - 1){
                     return ARGUMENTSERROR;
                 }
@@ -16,7 +19,7 @@ int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **outp
                 *input_filename = argv[i];
             }
 
-            if (strcmp(argv[i], "-i") == 0) {
+            else if (strcmp(argv[i], "-i") == 0) {
                 if (i == argc - 1){
                     return ARGUMENTSERROR;
                 }
@@ -24,7 +27,7 @@ int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **outp
                 *input_filename = argv[i];
             }
 
-            if (strcmp(argv[i], "--output") == 0) {
+            else if (strcmp(argv[i], "--output") == 0) {
                 if (i == argc - 1){
                     return ARGUMENTSERROR;
                 }
@@ -32,12 +35,16 @@ int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **outp
                 *output_filename = argv[i];
             }
 
-            if (strcmp(argv[i], "-o") == 0) {
+            else if (strcmp(argv[i], "-o") == 0) {
                 if (i == argc - 1){
                     return ARGUMENTSERROR;
                 }
                 i++;
                 *output_filename = argv[i];
+            }
+
+            else if (strcmp(argv[i], "--END") == 0) {
+                *sort_mode = SORT_FROM_END;
             }
         }
     }
@@ -50,6 +57,16 @@ int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **outp
         *output_filename = "output.txt";
     }
     return 0;
+}
+
+int read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input) {
+    *buffer_size = get_file_size(input_filename) + 1;
+
+    *buffer = (char *) calloc(*buffer_size, sizeof(char));
+    *buffer_size = fread(*buffer, sizeof(char), *buffer_size, input);
+    fclose(input);
+    //иногда fread не ставит '\0' в конце
+    (*buffer)[*buffer_size] = '\0';
 }
 
 
@@ -218,23 +235,23 @@ int get_number_of_lines(char *buffer) {
     return nlines;
 }
 
-void divide_lines(struct my_string *lines, int nlines, char *buffer) {
+void divide_lines(struct my_string **lines, int nlines, char *buffer) {
     assert(lines);
     assert(nlines >= 0);
     assert(buffer);
-
-    lines[0].str = buffer;
+    *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
+    (*lines)[0]str = buffer;
     int counter = 1;
 
     for (int i = 0;; ++i) {
         if (buffer[i] == '\n' || buffer[i] == '\0')  {
             if (counter == nlines) {
-                lines[counter - 1].length = buffer + i - lines[counter - 1].str;
+                (*lines)[counter - 1].length = buffer + i - (*lines)[counter - 1].str;
                 break;
             }
             if (buffer[i + 1] != '\n' && buffer[i + 1] != '\0'){
-                lines[counter].str = buffer + i + 1;
-                lines[counter - 1].length = lines[counter].str - lines[counter - 1].str;
+                (*lines)[counter].str = buffer + i + 1;
+                (*lines)[counter - 1].length = (*lines)[counter].str - (*lines)[counter - 1].str;
                 counter++;
             }
         }
@@ -272,7 +289,7 @@ int test_everything() {
     test_get_number_of_lines();
     test_divide_lines();
     printf("Все корректно!\n");
-    return 2;
+    return TESTCORRECT;
 }
 
 

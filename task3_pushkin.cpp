@@ -7,16 +7,17 @@ int main(int argc, char *argv[]) {
     char *input_filename = NULL;
     char *output_filename = NULL;
     int result = 0;
+    int sort_mode = SORT_DEFAULT;
     //---------------------------------------
     //обработка аргументов командной строки |
     //---------------------------------------
 
-    result = use_cmd_arguments(argc, argv, &input_filename, &output_filename);
+    result = use_cmd_arguments(argc, argv, &input_filename, &output_filename, &sort_mode);
     if (result == ARGUMENTSERROR){
         printf("Ошибка при считывании аргументов командной строки\n");
-        return 0;
+        return ARGUMENTSERROR;
     }
-    if (result == 2) {
+    if (result == TESTCORRECT) {
         return 0;
     }
 
@@ -26,36 +27,34 @@ int main(int argc, char *argv[]) {
     //setlocale(LC_ALL, "en_EN.CP1251");
     FILE *input = NULL, *output = NULL;
     input = fopen(input_filename, "r");
-
     if (input == NULL) {
         printf("Ошибка открытия файла %s\n", input_filename);
         return 1;
     }
 
-
     //----------------
     //чтение в буфер |
     //----------------
     int buffer_size = 0;
-    buffer_size = get_file_size(input_filename) + 1;
-
-    char *buffer = (char *) calloc(buffer_size, sizeof(char));
-    buffer_size = fread(buffer, sizeof(char), buffer_size, input);
-    fclose(input);
-    //иногда fread не ставит '\0' в конце
-    buffer[buffer_size] = '\0';
+    char *buffer;
+    read_buffer(&buffer, &buffer_size, input_filename, input);
     //-----------------------------
     //разделение буфера на строки |
     //-----------------------------
     int nlines = get_number_of_lines(buffer);
-    struct my_string *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
+    struct my_string *lines;
+    //struct my_string *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
 
-    divide_lines(lines, nlines, buffer);
+    divide_lines(&lines, nlines, buffer);
 
     //----------------
     //сортировка o_O |
     //----------------
-    quicksort(lines, 0, nlines, compare_my_strings_from_end, swap_my_strings);
+    if (sort_mode == SORT_DEFAULT){
+        quicksort(lines, 0, nlines, compare_my_strings, swap_my_strings);
+    } else if (sort_mode == SORT_FROM_END) {
+        quicksort(lines, 0, nlines, compare_my_strings_from_end, swap_my_strings);
+    }
 
 
     //-----------

@@ -8,13 +8,18 @@
 #include <ctype.h>
 
 extern const int ARGUMENTSERROR;
+extern const int TESTCORRECT;
+extern const int SORT_DEFAULT;
+extern const int SORT_FROM_END;
 
 struct my_string {
     char *str;
     int length;
 } ;
 
-int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename);
+int read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input);
+
+int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename, int *sort_mode);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void test_everything documentation
