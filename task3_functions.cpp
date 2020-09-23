@@ -140,14 +140,7 @@ int compare_strings_from_end(char *s1, int len1, char *s2, int len2) {
     }
 }
 
-int compare_my_strings(void *array, int i, int j) {
-    assert(array);
-    assert(i >= 0);
-    assert(j >= 0);
-    return compare_strings(((struct my_string *)array + i)->str, ((struct my_string *)array + j) -> str);
-}
-
-int compare_kek(void *x1, void *x2) {
+int compare_my_strings(void *x1, void *x2) {
     struct my_string *s1 = (struct my_string *)x1;
     struct my_string *s2 = (struct my_string *)x2;
     //printf("kok\n");
@@ -156,12 +149,9 @@ int compare_kek(void *x1, void *x2) {
     return compare_strings(s1->str, s2->str);
 }
 
-int compare_my_strings_from_end(void *array, int i, int j) {
-    assert(array);
-    assert(i >= 0);
-    assert(j >= 0);
-    struct my_string *s1 = ((struct my_string *)array + i);
-    struct my_string *s2 = ((struct my_string *)array + j);
+int compare_my_strings_from_end(void *x1, void *x2) {
+    struct my_string *s1 = (struct my_string *)x1;
+    struct my_string *s2 = (struct my_string *)x2;
     return compare_strings_from_end(s1->str, s1->length, s2 -> str, s2->length);
 }
 
@@ -331,17 +321,17 @@ void my_print(char *string) {
 
 int test_everything() {
     printf("Начинаем тестирование...\n");
-    test_compare_strings();
+    /*test_compare_strings();
     test_compare_strings_from_end();
     test_get_file_size();
     test_get_number_of_lines();
-    test_divide_lines();
+    test_divide_lines();*/
     printf("Все корректно!\n");
     return TESTCORRECT;
 }
 
 
-void test_compare_strings() {
+/*void test_compare_strings() {
     int n_tests = 3;
     char *tests[][2] = {
         {"abc", "A,B---c"},
@@ -444,4 +434,4 @@ void test_divide_lines() {
         }
         assert(result == 0);
     }
-}
+}*/

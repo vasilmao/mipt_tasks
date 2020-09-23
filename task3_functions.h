@@ -17,8 +17,6 @@ struct my_string {
     int length;
 } ;
 
-int compare_kek(void *x1, void *x2);
-
 void quicksort_kek(void *start, void *finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2));
 
 void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input);
@@ -45,7 +43,7 @@ int test_everything();
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int compare_strings(char *s1, char *s2);
 
-void test_compare_strings();
+//void test_compare_strings();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int compare_my_strings documentation
@@ -58,7 +56,7 @@ void test_compare_strings();
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_my_strings(void *array, int i, int j);
+int compare_my_strings(void *x1, void *x2);
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
@@ -75,7 +73,7 @@ int compare_my_strings(void *array, int i, int j);
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int compare_strings_from_end(char *s1, int len1, char *s2, int len2);
 
-void test_compare_strings_from_end();
+//void test_compare_strings_from_end();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int compare_my_strings_from_end documentation
@@ -88,7 +86,7 @@ void test_compare_strings_from_end();
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_my_strings_from_end(void *array, int i, int j);
+int compare_my_strings_from_end(void *x1, void *x2);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void swap_my_strings documentation

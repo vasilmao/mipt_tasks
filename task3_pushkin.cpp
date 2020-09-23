@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
         quicksort(lines, 0, nlines, compare_my_strings_from_end, swap_my_strings);
     }*/
     printf("YOY\n");
-    quicksort_kek(lines, lines + nlines, sizeof(struct my_string), compare_kek, swap_my_strings);
+    quicksort_kek(lines, lines + nlines, sizeof(struct my_string), compare_my_strings_from_end, swap_my_strings);
     printf("YEE\n");
     //-----------
     //печатание |
