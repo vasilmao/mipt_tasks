@@ -1,4 +1,4 @@
-#include "task3_functions.h"
+#include "functions.h"
 
 const int ARGUMENTSERROR = 3;
 const int TESTCORRECT = 4;
