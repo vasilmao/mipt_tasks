@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "onegin_functions.h"
 
 //2 - норм тестировано
 //1 - ошибка аргументов
@@ -8,8 +8,10 @@
 int main(int argc, char *argv[]) {
     char *input_filename = NULL;
     char *output_filename = NULL;
+    FILE *input = NULL, *output = NULL;
     int result = 0;
     int sort_mode = SORT_DEFAULT;
+    //setlocale(LC_ALL, "en_EN.CP1251");
     //---------------------------------------
     //обработка аргументов командной строки |
     //---------------------------------------
@@ -27,13 +29,8 @@ int main(int argc, char *argv[]) {
     //-----------------
     //открытие файлов |
     //-----------------
-    //setlocale(LC_ALL, "en_EN.CP1251");
-    FILE *input = NULL, *output = NULL;
-    input = fopen(input_filename, "r");
-    if (input == NULL) {
-        printf("Ошибка открытия файла %s\n", input_filename);
-        return 1;
-    }
+
+    open_file(&input, input_filename, "r");
 
     //----------------
     //чтение в буфер |
@@ -57,19 +54,18 @@ int main(int argc, char *argv[]) {
     } else if (sort_mode == SORT_FROM_END) {
         quicksort(lines, 0, nlines, compare_my_strings_from_end, swap_my_strings);
     }*/
+    printf("%d\n", sort_mode);
     if (sort_mode == SORT_DEFAULT){
         quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings, swap_my_strings);
     } else if (sort_mode == SORT_FROM_END) {
         quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings_from_end, swap_my_strings);
     }
+
     //-----------
     //печатание |
     //-----------
-    output = fopen(output_filename, "w");
-    if (output == NULL) {
-        printf("Ошибка открытия файла %s\n", output_filename);
-        return 1;
-    }
+
+    open_file(&output, output_filename, "w");
     for(int i = 0; i < nlines; ++i) {
         my_fprint(lines[i].str, output);
         fprintf(output, "\n");
@@ -79,6 +75,7 @@ int main(int argc, char *argv[]) {
     //----------------
     //и под конец... |
     //----------------
+
     free(buffer);
     free(lines);
 

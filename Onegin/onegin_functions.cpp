@@ -5,6 +5,14 @@ const int TESTCORRECT = 4;
 const int SORT_DEFAULT = 0;
 const int SORT_FROM_END = 1;
 
+void open_file(FILE **file, char *filename, const char *mode) {
+    *file = fopen(filename, mode);
+    if (*file == NULL) {
+        printf("Ошибка открытия файла %s\n", filename);
+    }
+    assert(*file);
+}
+
 int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename, int *sort_mode){
     if (argc > 1) {
         for (int i = 1; i < argc; i++) {
