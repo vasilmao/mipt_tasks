@@ -17,7 +17,7 @@ struct my_string {
     int length;
 } ;
 
-int read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input);
+void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input);
 
 int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename, int *sort_mode);
 
@@ -149,7 +149,7 @@ void test_get_number_of_lines();
 //!
 //! @it skips empty lines like get_number_of_lines function
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void divide_lines(struct my_string *lines, int nlines, char *buffer);
+void divide_lines(struct my_string **lines, int nlines, char *buffer);
 
 void test_divide_lines();
 

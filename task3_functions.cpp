@@ -59,7 +59,7 @@ int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **outp
     return 0;
 }
 
-int read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input) {
+void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input) {
     *buffer_size = get_file_size(input_filename) + 1;
 
     *buffer = (char *) calloc(*buffer_size, sizeof(char));
@@ -240,7 +240,7 @@ void divide_lines(struct my_string **lines, int nlines, char *buffer) {
     assert(nlines >= 0);
     assert(buffer);
     *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
-    (*lines)[0]str = buffer;
+    (*lines)[0].str = buffer;
     int counter = 1;
 
     for (int i = 0;; ++i) {
@@ -382,7 +382,7 @@ void test_divide_lines() {
     };
     struct my_string *lines = (struct my_string *) calloc(nlines, sizeof(struct my_string));
 
-    divide_lines(lines, nlines, test);
+    divide_lines(&lines, nlines, test);
 
 
     for (int i = 0; i < nlines; ++i) {

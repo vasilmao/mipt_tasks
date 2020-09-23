@@ -3,6 +3,8 @@
 //2 - норм тестировано
 //1 - ошибка аргументов
 
+
+
 int main(int argc, char *argv[]) {
     char *input_filename = NULL;
     char *output_filename = NULL;
@@ -44,7 +46,6 @@ int main(int argc, char *argv[]) {
     int nlines = get_number_of_lines(buffer);
     struct my_string *lines;
     //struct my_string *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
-
     divide_lines(&lines, nlines, buffer);
 
     //----------------
