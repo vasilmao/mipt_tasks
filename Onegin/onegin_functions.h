@@ -20,19 +20,19 @@ struct my_string {
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! opens file
 //!
-//! @param [in] file     - file
-//! @param [in] filename - file name
-//! @param [in] mode     - mode (like r, w)
+//! @param[in] file     - file
+//! @param[in] filename - file name
+//! @param[in] mode     - mode (like r, w)
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void open_file(FILE **file, char *filename, const char *mode);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! reads from input file to buffer
 //!
-//! @param [in] buffer         - buffer to write
-//! @param [in] buffer_size    - variable to write buffer size
-//! @param [in] input_filename - input file name
-//! @param [in] input          - input file
+//! @param[in] buffer         - buffer to write
+//! @param[in] buffer_size    - variable to write buffer size
+//! @param[in] input_filename - input file name
+//! @param[in] input          - input file
 //!
 //! @return ARGUMENTSERROR if wrong cmd arguments, TESTCORRECT if programm is in test mode and all testings are ok
 //!
@@ -41,19 +41,19 @@ void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *in
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! checks cmd arguments:
-//! --input <file name>  - change input  filename
-//! --i <file name>      - same
-//! --output <file name> - change output filename
-//! --o <file name>      - same
-//! --END                - sort from end of strings
-//! --test               - testing mode
+//! checks cmd arguments:\n
+//! --input <file name>  - change input  filename \n
+//! --i <file name>      - same\n
+//! --output <file name> - change output filename\n
+//! --o <file name>      - same\n
+//! --END                - sort from end of strings\n
+//! --test               - testing mode\n
 //!
-//! @param [in] argc - number of  command line arguments
-//! @param [in] argv            - command line arguments
-//! @param [in] input_filename  - input file name
-//! @param [in] output_filename - output file name
-//! @param [in] sort_mode       - sort mode
+//! @param[in] argc - number of  command line arguments
+//! @param[in] argv            - command line arguments
+//! @param[in] input_filename  - input file name
+//! @param[in] output_filename - output file name
+//! @param[in] sort_mode       - sort mode
 //!
 //! @return ARGUMENTSERROR if wrong cmd arguments, TESTCORRECT if programm is in test mode and all testings are ok
 //!
@@ -73,8 +73,8 @@ int test_everything();
 //! int compare_strings documentation
 //! compares two strings, skipping everything that is not isalpha
 //!
-//! @param [in] s1 - pointer to first  string
-//! @param [in] s2 - pointer to second string
+//! @param[in] s1 - pointer to first  string
+//! @param[in] s2 - pointer to second string
 //!
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
