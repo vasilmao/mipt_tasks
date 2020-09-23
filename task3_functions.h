@@ -19,8 +19,6 @@ struct my_string {
 
 int compare_kek(void *x1, void *x2);
 
-void swap_kek(void *x1, void *x2);
-
 void quicksort_kek(void *start, void *finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2));
 
 void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input);
@@ -101,7 +99,7 @@ int compare_my_strings_from_end(void *array, int i, int j);
 //! @param [in] int j - second index to swap
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void swap_my_strings(void *array, int i, int j);
+void swap_my_strings(void *x1, void *x2);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void quicksort documentation

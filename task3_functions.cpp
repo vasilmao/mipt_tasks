@@ -73,11 +73,11 @@ void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *in
 int compare_strings(char *s1, char *s2) {
     assert(s1);
     assert(s2);
-    //my_print(s1);
-    //printf("YAY\n");
-    //printf("\n");
-    //my_print(s2);
-    //printf("\n");
+    /*printf("YAY\n");
+    my_print(s1);
+    printf("\n");
+    my_print(s2);
+    printf("\n");*/
     while (*s1 != '\n' && *s1 != '\0' && !isalpha(*s1)){
         ++s1;
     }
@@ -148,7 +148,12 @@ int compare_my_strings(void *array, int i, int j) {
 }
 
 int compare_kek(void *x1, void *x2) {
-    return compare_strings(((struct my_string *)x1)->str, ((struct my_string *)x2) -> str);
+    struct my_string *s1 = (struct my_string *)x1;
+    struct my_string *s2 = (struct my_string *)x2;
+    //printf("kok\n");
+    //printf("comp: %d and %d\n", s1, s2);
+    //printf("strings: %d and %d\n", s1->str, s2->str);
+    return compare_strings(s1->str, s2->str);
 }
 
 int compare_my_strings_from_end(void *array, int i, int j) {
@@ -160,19 +165,7 @@ int compare_my_strings_from_end(void *array, int i, int j) {
     return compare_strings_from_end(s1->str, s1->length, s2 -> str, s2->length);
 }
 
-void swap_my_strings(void *array, int i, int j) {
-    assert(array);
-    assert(i >= 0);
-    assert(j >= 0);
-
-    struct my_string *s1 = ((struct my_string *)array + i);
-    struct my_string *s2 = ((struct my_string *)array + j);
-    struct my_string tmp = *s1;
-    *s1 = *s2;
-    *s2 = tmp;
-}
-
-void swap_kek(void *x1, void *x2) {
+void swap_my_strings(void *x1, void *x2) {
     struct my_string *s1 = ((struct my_string *)x1);
     struct my_string *s2 = ((struct my_string *)x2);
     struct my_string tmp = *s1;
@@ -181,32 +174,33 @@ void swap_kek(void *x1, void *x2) {
 }
 
 void quicksort_kek(void *start, void *finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2)){
-
     char *sta = (char *) start;
     char *fin = (char *) finish;
     //printf("YAY1\n");
-    if (fin - sta <= 1)
+    if (fin - sta <= elem_size)
         return ;
-    /*if (finish - start == 2) {
-        if (cmp(array, start, finish - 1) > 0) {
-            swap_quicksort(array, start, finish - 1);
+    if (fin - sta == 2 * elem_size) {
+        if (cmp((void *) sta, (void *) (fin - elem_size)) > 0) {
+            swap_quicksort((void *) sta, (void *)(fin - elem_size));
         }
         return ;
-    }*/
-    char * m = sta + (fin - sta) / 2;
-    if (m != finish - elem_size) {
-        swap_quicksort((void *)m, (void *)(finish - elem_size));
+    }
+    char * m = sta + ((fin - sta) / 2) / elem_size * elem_size;
+    if (m != fin - elem_size) {
+        swap_quicksort((void *)m, (void *)(fin - elem_size));
     }
     char *place_to_insert = sta;
-    for (char *i = sta; i < fin - elem_size; i += elem_size) {
-        if (cmp((void *)i, (void *)(((char *)(fin - elem_size)))) <= 0) {
+    char *i = sta;
+    for (; i < fin - elem_size; i += elem_size) {
+        if (cmp((void *)i, (void *)(fin - elem_size)) <= 0) {
+            //printf("yiy\n");
             if (i != place_to_insert){
                 swap_quicksort((void *)i, (void *)place_to_insert);
             }
             place_to_insert += elem_size;
         }
     }
-    if (finish - elem_size != place_to_insert) {
+    if (fin - elem_size != place_to_insert) {
         swap_quicksort((void *)(fin - elem_size), (void *) place_to_insert);
     }
     quicksort_kek(sta, place_to_insert, elem_size, cmp, swap_quicksort);
@@ -318,9 +312,13 @@ void my_fprint(char *string, FILE *output_file) {
 }
 
 void my_print(char *string) {
+    printf("not bruhable\n");
     assert(string);
+    printf("bruhable\n");
+    printf("%d\n", string);
     for (int i = 0; string[i] != '\n' && string[i] != '\0'; ++i) {
-        putc(string[i], stdout);
+        //putc(string[i], stdout);
+        printf("%d ", string[i]);
     }
 }
 

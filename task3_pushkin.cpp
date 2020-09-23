@@ -6,7 +6,6 @@
 
 
 int main(int argc, char *argv[]) {
-    printf("BRUH\n");
     char *input_filename = NULL;
     char *output_filename = NULL;
     int result = 0;
@@ -24,7 +23,6 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    printf("YAY0\n");
 
     //-----------------
     //открытие файлов |
@@ -50,6 +48,11 @@ int main(int argc, char *argv[]) {
     struct my_string *lines;
     //struct my_string *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
     divide_lines(&lines, nlines, buffer);
+    for(int i = 0; i < nlines; ++i) {
+        if (lines[i].str <= buffer) {
+            printf("BRUHH %d\n", i);
+        }
+    }
 
     //----------------
     //сортировка o_O |
@@ -60,7 +63,7 @@ int main(int argc, char *argv[]) {
         quicksort(lines, 0, nlines, compare_my_strings_from_end, swap_my_strings);
     }*/
     printf("YOY\n");
-    quicksort_kek(lines, lines + nlines, sizeof(struct my_string), compare_kek, swap_kek);
+    quicksort_kek(lines, lines + nlines, sizeof(struct my_string), compare_kek, swap_my_strings);
     printf("YEE\n");
     //-----------
     //печатание |
