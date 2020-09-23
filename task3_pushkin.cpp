@@ -6,6 +6,7 @@
 
 
 int main(int argc, char *argv[]) {
+    printf("BRUH\n");
     char *input_filename = NULL;
     char *output_filename = NULL;
     int result = 0;
@@ -16,12 +17,14 @@ int main(int argc, char *argv[]) {
 
     result = use_cmd_arguments(argc, argv, &input_filename, &output_filename, &sort_mode);
     if (result == ARGUMENTSERROR){
-        printf("Ошибка при считывании аргументов командной строки\n");
+        printf("Ошибка при считывании аргументов командной строк\n");
         return ARGUMENTSERROR;
     }
     if (result == TESTCORRECT) {
         return 0;
     }
+
+    printf("YAY0\n");
 
     //-----------------
     //открытие файлов |
@@ -51,11 +54,13 @@ int main(int argc, char *argv[]) {
     //----------------
     //сортировка o_O |
     //----------------
-    if (sort_mode == SORT_DEFAULT){
+    /*if (sort_mode == SORT_DEFAULT){
         quicksort(lines, 0, nlines, compare_my_strings, swap_my_strings);
     } else if (sort_mode == SORT_FROM_END) {
         quicksort(lines, 0, nlines, compare_my_strings_from_end, swap_my_strings);
-    }
+    }*/
+    printf("YOY\n");
+    quicksort_kek(lines, 0, nlines, sizeof(struct my_string), compare_kek, swap_kek);
 
 
     //-----------
