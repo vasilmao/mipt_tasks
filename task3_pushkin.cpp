@@ -41,18 +41,13 @@ int main(int argc, char *argv[]) {
     int buffer_size = 0;
     char *buffer;
     read_buffer(&buffer, &buffer_size, input_filename, input);
+    fclose(input);
     //-----------------------------
     //разделение буфера на строки |
     //-----------------------------
     int nlines = get_number_of_lines(buffer);
     struct my_string *lines;
-    //struct my_string *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
     divide_lines(&lines, nlines, buffer);
-    for(int i = 0; i < nlines; ++i) {
-        if (lines[i].str <= buffer) {
-            printf("BRUHH %d\n", i);
-        }
-    }
 
     //----------------
     //сортировка o_O |
@@ -62,9 +57,7 @@ int main(int argc, char *argv[]) {
     } else if (sort_mode == SORT_FROM_END) {
         quicksort(lines, 0, nlines, compare_my_strings_from_end, swap_my_strings);
     }*/
-    printf("YOY\n");
     quicksort_kek(lines, lines + nlines, sizeof(struct my_string), compare_my_strings_from_end, swap_my_strings);
-    printf("YEE\n");
     //-----------
     //печатание |
     //-----------
@@ -85,7 +78,5 @@ int main(int argc, char *argv[]) {
     free(buffer);
     free(lines);
 
-    fclose(input);
-    fclose(output);
     return 0;
 }

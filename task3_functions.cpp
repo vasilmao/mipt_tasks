@@ -65,7 +65,7 @@ void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *in
     *buffer = (char *) calloc(*buffer_size, sizeof(char));
     *buffer_size = fread(*buffer, sizeof(char), *buffer_size, input);
     fclose(input);
-    //иногда fread не ставит '\0' в конце
+    //fread не ставит '\0' в конце
     (*buffer)[*buffer_size] = '\0';
 }
 
@@ -143,9 +143,6 @@ int compare_strings_from_end(char *s1, int len1, char *s2, int len2) {
 int compare_my_strings(void *x1, void *x2) {
     struct my_string *s1 = (struct my_string *)x1;
     struct my_string *s2 = (struct my_string *)x2;
-    //printf("kok\n");
-    //printf("comp: %d and %d\n", s1, s2);
-    //printf("strings: %d and %d\n", s1->str, s2->str);
     return compare_strings(s1->str, s2->str);
 }
 
