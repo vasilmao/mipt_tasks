@@ -6,6 +6,9 @@ const int SORT_DEFAULT = 0;
 const int SORT_FROM_END = 1;
 
 void open_file(FILE **file, char *filename, const char *mode) {
+    assert(file);
+    assert(*file);
+    assert(filename);
     *file = fopen(filename, mode);
     if (*file == NULL) {
         printf("Ошибка открытия файла %s\n", filename);
@@ -14,6 +17,11 @@ void open_file(FILE **file, char *filename, const char *mode) {
 }
 
 int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename, int *sort_mode){
+    assert(argv);
+    assert(input_filename);
+    assert(*input_filename);
+    assert(output_filename);
+    assert(*output_filename);
     if (argc > 1) {
         for (int i = 1; i < argc; i++) {
             if (strcmp(argv[i], "--test") == 0) {
@@ -68,6 +76,10 @@ int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **outp
 }
 
 void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input) {
+    assert(buffer);
+    assert(*buffer);
+    assert(input_filename);
+    assert(input);
     *buffer_size = get_file_size(input_filename) + 1;
 
     *buffer = (char *) calloc(*buffer_size, sizeof(char));
@@ -78,65 +90,60 @@ void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *in
 }
 
 
-int compare_strings(char *s1, char *s2) {
-    assert(s1);
-    assert(s2);
-    /*printf("YAY\n");
-    my_print(s1);
-    printf("\n");
-    my_print(s2);
-    printf("\n");*/
-    while (*s1 != '\n' && *s1 != '\0' && !isalpha(*s1)){
-        ++s1;
+int compare_strings(char *string1, char *string2) {
+    assert(string1);
+    assert(string2);
+    while (*string1 != '\n' && *string1 != '\0' && !isalpha(*string1)){
+        ++string1;
     }
-    while (*s2 != '\n' && *s2 != '\0' && !isalpha(*s2)){
-        ++s2;
+    while (*string2 != '\n' && *string2 != '\0' && !isalpha(*string2)){
+        ++string2;
     }
-    while (tolower(*s1) == tolower(*s2)) {
-        if (*s1 == '\n' || *s1 == '\0') {
+    while (tolower(*string1) == tolower(*string2)) {
+        if (*string1 == '\n' || *string1 == '\0') {
             return 0;
         }
-        s1++; s2++;
-        while (*s1 != '\n' && *s1 != '\0' && !isalpha(*s1)){
-            ++s1;
+        string1++; string2++;
+        while (*string1 != '\n' && *string1 != '\0' && !isalpha(*string1)){
+            ++string1;
         }
-        while (*s2 != '\n' && *s2 != '\0' && !isalpha(*s2)){
-            ++s2;
+        while (*string2 != '\n' && *string2 != '\0' && !isalpha(*string2)){
+            ++string2;
         }
     }
-    return tolower(*s1) - tolower(*s2);
+    return tolower(*string1) - tolower(*string2);
 }
 
 
-int compare_strings_from_end(char *s1, int len1, char *s2, int len2) {
-    assert(s1);
-    assert(s2);
+int compare_strings_from_end(char *string1, int len1, char *string2, int len2) {
+    assert(string1);
+    assert(string2);
     assert(len1 >= 0);
     assert(len2 >= 0);
 
     int cnt = 0;
-    s1 += len1 - 1;
-    s2 += len2 - 1;
+    string1 += len1 - 1;
+    string2 += len2 - 1;
     len1--;
     len2--;
     while (1) {
-        if (!isalpha(*s1) && len1 >= 0) {
-            s1--;
+        if (!isalpha(*string1) && len1 >= 0) {
+            string1--;
             len1--;
             continue;
         }
-        if (!isalpha(*s2) && len2 >= 0) {
-            s2--;
+        if (!isalpha(*string2) && len2 >= 0) {
+            string2--;
             len2--;
             continue;
         }
-        if (tolower(*s1) != tolower(*s2)) {
-            return tolower(*s1) - tolower(*s2);
+        if (tolower(*string1) != tolower(*string2)) {
+            return tolower(*string1) - tolower(*string2);
         }
 
-        s1--;
+        string1--;
         len1--;
-        s2--;
+        string2--;
         len2--;
         if (len1 < 0 || len2 < 0) {
             if (len1 == 0 && len2 == 0) {
@@ -148,46 +155,57 @@ int compare_strings_from_end(char *s1, int len1, char *s2, int len2) {
     }
 }
 
-int compare_my_strings(void *x1, void *x2) {
-    struct my_string *s1 = (struct my_string *)x1;
-    struct my_string *s2 = (struct my_string *)x2;
-    return compare_strings(s1->str, s2->str);
+int compare_my_strings(void *elem1, void *elem2) {
+    assert(elem1);
+    assert(elem2);
+    struct my_string *string1 = (struct my_string *)elem1;
+    struct my_string *string2 = (struct my_string *)elem2;
+    return compare_strings(string1->str, string2->str);
 }
 
-int compare_my_strings_from_end(void *x1, void *x2) {
-    struct my_string *s1 = (struct my_string *)x1;
-    struct my_string *s2 = (struct my_string *)x2;
-    return compare_strings_from_end(s1->str, s1->length, s2 -> str, s2->length);
+int compare_my_strings_from_end(void *elem1, void *elem2) {
+    assert(elem1);
+    assert(elem2);
+    struct my_string *string1 = (struct my_string *)elem1;
+    struct my_string *string2 = (struct my_string *)elem2;
+    return compare_strings_from_end(string1->str, string1->length, string2->str, string2->length);
 }
 
-void swap_my_strings(void *x1, void *x2) {
-    struct my_string *s1 = ((struct my_string *)x1);
-    struct my_string *s2 = ((struct my_string *)x2);
+void swap_my_strings(void *elem1, void *elem2) {
+    assert(elem1);
+    assert(elem2);
+    struct my_string *s1 = ((struct my_string *)elem1);
+    struct my_string *s2 = ((struct my_string *)elem2);
     struct my_string tmp = *s1;
     *s1 = *s2;
     *s2 = tmp;
 }
 
-void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2)){
-    char *sta = (char *) start;
-    char *fin = (char *) finish;
-    //printf("YAY1\n");
-    if (fin - sta <= elem_size)
+void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2), void (*swap_quicksort)(void *elem1, void *elem2)){
+    assert(start);
+    assert(finish);
+    assert(elem_size >= 0);
+    assert(cmp);
+    assert(swap_quicksort);
+
+    char *left = (char *) start;
+    char *right = (char *) finish;
+    if (right - left <= elem_size)
         return ;
-    if (fin - sta == 2 * elem_size) {
-        if (cmp((void *) sta, (void *) (fin - elem_size)) > 0) {
-            swap_quicksort((void *) sta, (void *)(fin - elem_size));
+    if (right - left == 2 * elem_size) {
+        if (cmp((void *) left, (void *) (right - elem_size)) > 0) {
+            swap_quicksort((void *) left, (void *)(right - elem_size));
         }
         return ;
     }
-    char * m = sta + ((fin - sta) / 2) / elem_size * elem_size;
-    if (m != fin - elem_size) {
-        swap_quicksort((void *)m, (void *)(fin - elem_size));
+    char * m = left + ((right - left) / 2) / elem_size * elem_size;
+    if (m != right - elem_size) {
+        swap_quicksort((void *)m, (void *)(right - elem_size));
     }
-    char *place_to_insert = sta;
-    char *i = sta;
-    for (; i < fin - elem_size; i += elem_size) {
-        if (cmp((void *)i, (void *)(fin - elem_size)) <= 0) {
+    char *place_to_insert = left;
+    char *i = left;
+    for (; i < right - elem_size; i += elem_size) {
+        if (cmp((void *)i, (void *)(right - elem_size)) <= 0) {
             //printf("yiy\n");
             if (i != place_to_insert){
                 swap_quicksort((void *)i, (void *)place_to_insert);
@@ -195,11 +213,11 @@ void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *x1, vo
             place_to_insert += elem_size;
         }
     }
-    if (fin - elem_size != place_to_insert) {
-        swap_quicksort((void *)(fin - elem_size), (void *) place_to_insert);
+    if (right - elem_size != place_to_insert) {
+        swap_quicksort((void *)(right - elem_size), (void *) place_to_insert);
     }
-    quicksort(sta, place_to_insert, elem_size, cmp, swap_quicksort);
-    quicksort(place_to_insert + elem_size, fin, elem_size, cmp, swap_quicksort);
+    quicksort(left, place_to_insert, elem_size, cmp, swap_quicksort);
+    quicksort(place_to_insert + elem_size, right, elem_size, cmp, swap_quicksort);
 }
 
 
@@ -216,6 +234,7 @@ int get_file_size(char *filename) {
 
 int get_number_of_lines(char *buffer) {
     assert(buffer);
+
     int nlines = 0;
     for (int i = 0; ; ++i) {
         if (buffer[i] == '\n') {
@@ -243,6 +262,7 @@ void divide_lines(struct my_string **lines, int nlines, char *buffer) {
     assert(lines);
     assert(nlines >= 0);
     assert(buffer);
+
     *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
     (*lines)[0].str = buffer;
     int counter = 1;
@@ -272,13 +292,10 @@ void my_fprint(char *string, FILE *output_file) {
 }
 
 void my_print(char *string) {
-    printf("not bruhable\n");
     assert(string);
-    printf("bruhable\n");
-    printf("%d\n", string);
     for (int i = 0; string[i] != '\n' && string[i] != '\0'; ++i) {
-        //putc(string[i], stdout);
-        printf("%d ", string[i]);
+        putc(string[i], stdout);
+        //printf("%d ", string[i]);
     }
 }
 

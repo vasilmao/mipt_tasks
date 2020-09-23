@@ -73,13 +73,13 @@ int test_everything();
 //! int compare_strings documentation
 //! compares two strings, skipping everything that is not isalpha
 //!
-//! @param[in] s1 - pointer to first  string
-//! @param[in] s2 - pointer to second string
+//! @param[in] string1 - pointer to first  string
+//! @param[in] string2 - pointer to second string
 //!
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_strings(char *s1, char *s2);
+int compare_strings(char *string1, char *string2);
 
 void test_compare_strings();
 
@@ -87,28 +87,28 @@ void test_compare_strings();
 //! int compare_my_strings documentation
 //! compares two my_strings, just returns result of compare_strings function
 //!
-//! @param [in] x1 - first  my_string
-//! @param [in] x2 - second my_string
+//! @param [in] elem1 - first  my_string
+//! @param [in] elem2 - second my_string
 //!
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_my_strings(void *x1, void *x2);
+int compare_my_strings(void *elem1, void *elem2);
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int compare_strings documentation
 //! compares two strings from end to start, skipping everything that is not isalpha
 //!
-//! @param [in] s1 -  pointer to first  string
+//! @param [in] string1 -  pointer to first  string
 //! @param [in] len1 - length of first  string
-//! @param [in] s2 -  pointer to second string
+//! @param [in] string2 -  pointer to second string
 //! @param [in] len2 - length of second string
 //!
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_strings_from_end(char *s1, int len1, char *s2, int len2);
+int compare_strings_from_end(char *string1, int len1, char *string2, int len2);
 
 void test_compare_strings_from_end();
 
@@ -116,23 +116,23 @@ void test_compare_strings_from_end();
 //! int compare_my_strings_from_end documentation
 //! compares two my_strings, just returns result of compare_strings_from_end function
 //!
-//! @param [in] x1 - first  my_string
-//! @param [in] x2 - second my_string
+//! @param [in] elem1 - first  my_string
+//! @param [in] elem2 - second my_string
 //!
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_my_strings_from_end(void *x1, void *x2);
+int compare_my_strings_from_end(void *elem1, void *elem2);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void swap_my_strings documentation
 //! swaps two my_strings
 //!
-//! @param [in] x1 - first my_string
-//! @param [in] x2 - second my_string
+//! @param [in] elem1 - first my_string
+//! @param [in] elem2 - second my_string
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void swap_my_strings(void *x1, void *x2);
+void swap_my_strings(void *elem1, void *elem2);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void quicksort documentation
@@ -145,7 +145,7 @@ void swap_my_strings(void *x1, void *x2);
 //! @param [in] swap_quicksort - swapper
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2));
+void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2), void (*swap_quicksort)(void *elem1, void *elem2));
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
