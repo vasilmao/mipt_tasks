@@ -19,8 +19,38 @@ struct my_string {
 
 
 
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! reads from input file to buffer
+//!
+//! @param [in] buffer         - buffer to write
+//! @param [in] buffer_size    - variable to write buffer size
+//! @param [in] input_filename - input file name
+//! @param [in] input          - input file
+//!
+//! @return ARGUMENTSERROR if wrong cmd arguments, TESTCORRECT if programm is in test mode and all testings are ok
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input);
 
+
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! checks cmd arguments:
+//! --input <file name>  - change input  filename
+//! --i <file name>      - same
+//! --output <file name> - change output filename
+//! --o <file name>      - same
+//! --END                - sort from end of strings
+//! --test               - testing mode
+//!
+//! @param [in] argc - number of  command line arguments
+//! @param [in] argv            - command line arguments
+//! @param [in] input_filename  - input file name
+//! @param [in] output_filename - output file name
+//! @param [in] sort_mode       - sort mode
+//!
+//! @return ARGUMENTSERROR if wrong cmd arguments, TESTCORRECT if programm is in test mode and all testings are ok
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename, int *sort_mode);
 
 
@@ -44,7 +74,7 @@ int test_everything();
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int compare_strings(char *s1, char *s2);
 
-//void test_compare_strings();
+void test_compare_strings();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int compare_my_strings documentation
@@ -73,7 +103,7 @@ int compare_my_strings(void *x1, void *x2);
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 int compare_strings_from_end(char *s1, int len1, char *s2, int len2);
 
-//void test_compare_strings_from_end();
+void test_compare_strings_from_end();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int compare_my_strings_from_end documentation
@@ -147,11 +177,11 @@ void test_get_number_of_lines();
 //! @param [in] nlines - number of lines to split
 //! @param [in] buffer - string to count nlines
 //!
-//! @it skips empty lines like get_number_of_lines function
+//! @note it skips empty lines like get_number_of_lines function
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void divide_lines(struct my_string **lines, int nlines, char *buffer);
 
-//void test_divide_lines();
+void test_divide_lines();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void my_fprint documentation

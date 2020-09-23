@@ -160,7 +160,7 @@ void swap_my_strings(void *x1, void *x2) {
     *s2 = tmp;
 }
 
-void quicksort_kek(void *start, void *finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2)){
+void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *x1, void *x2), void (*swap_quicksort)(void *x1, void *x2)){
     char *sta = (char *) start;
     char *fin = (char *) finish;
     //printf("YAY1\n");
@@ -190,43 +190,8 @@ void quicksort_kek(void *start, void *finish, int elem_size, int (*cmp)(void *x1
     if (fin - elem_size != place_to_insert) {
         swap_quicksort((void *)(fin - elem_size), (void *) place_to_insert);
     }
-    quicksort_kek(sta, place_to_insert, elem_size, cmp, swap_quicksort);
-    quicksort_kek(place_to_insert + elem_size, fin, elem_size, cmp, swap_quicksort);
-}
-
-void quicksort(void *array, int start, int finish, int (*cmp)(void *array, int i, int j), void (*swap_quicksort)(void *array, int i, int j)){
-    assert(start >= 0);
-    assert(finish >= 0);
-    assert(cmp);
-    assert(swap_quicksort);
-    assert(array);
-
-    if (finish - start <= 1)
-        return ;
-    if (finish - start == 2) {
-        if (cmp(array, start, finish - 1) > 0) {
-            swap_quicksort(array, start, finish - 1);
-        }
-        return ;
-    }
-    int m = (start + finish) / 2;
-    if (m != finish - 1) {
-        swap_quicksort(array, m, finish - 1);
-    }
-    int place_to_insert = start;
-    for (int i = start; i < finish - 1; ++i) {
-        if (cmp(array, i, (finish - 1)) < 0) {
-            if (i != place_to_insert){
-                swap_quicksort(array, i, place_to_insert);
-            }
-            ++place_to_insert;
-        }
-    }
-    if (finish - 1 != place_to_insert) {
-        swap_quicksort(array, finish - 1, place_to_insert);
-    }
-    quicksort(array, start, place_to_insert, cmp, swap_quicksort);
-    quicksort(array, place_to_insert + 1, finish, cmp, swap_quicksort);
+    quicksort(sta, place_to_insert, elem_size, cmp, swap_quicksort);
+    quicksort(place_to_insert + elem_size, fin, elem_size, cmp, swap_quicksort);
 }
 
 
@@ -318,17 +283,17 @@ void my_print(char *string) {
 
 int test_everything() {
     printf("Начинаем тестирование...\n");
-    /*test_compare_strings();
+    test_compare_strings();
     test_compare_strings_from_end();
     test_get_file_size();
     test_get_number_of_lines();
-    test_divide_lines();*/
+    test_divide_lines();
     printf("Все корректно!\n");
     return TESTCORRECT;
 }
 
 
-/*void test_compare_strings() {
+void test_compare_strings() {
     int n_tests = 3;
     char *tests[][2] = {
         {"abc", "A,B---c"},
@@ -431,4 +396,4 @@ void test_divide_lines() {
         }
         assert(result == 0);
     }
-}*/
+}

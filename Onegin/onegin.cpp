@@ -1,4 +1,4 @@
-#include "task3_functions.h"
+#include "functions.h"
 
 //2 - норм тестировано
 //1 - ошибка аргументов
@@ -57,7 +57,11 @@ int main(int argc, char *argv[]) {
     } else if (sort_mode == SORT_FROM_END) {
         quicksort(lines, 0, nlines, compare_my_strings_from_end, swap_my_strings);
     }*/
-    quicksort_kek(lines, lines + nlines, sizeof(struct my_string), compare_my_strings_from_end, swap_my_strings);
+    if (sort_mode == SORT_DEFAULT){
+        quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings, swap_my_strings);
+    } else if (sort_mode == SORT_FROM_END) {
+        quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings_from_end, swap_my_strings);
+    }
     //-----------
     //печатание |
     //-----------
