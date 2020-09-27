@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "onegin_functions.h"
 
 const int ARGUMENTSERROR = 3;
 const int TESTCORRECT = 4;
@@ -303,6 +303,7 @@ void my_print(char *string) {
 
 
 
+
 int test_everything() {
     printf("Начинаем тестирование...\n");
     test_compare_strings();
@@ -310,6 +311,7 @@ int test_everything() {
     test_get_file_size();
     test_get_number_of_lines();
     test_divide_lines();
+    test_quicksort();
     printf("Все корректно!\n");
     return TESTCORRECT;
 }
@@ -418,4 +420,33 @@ void test_divide_lines() {
         }
         assert(result == 0);
     }
+}
+
+void testquicksort() {
+    int nlines = 3;
+    char *test_buffer = "c\na\nb\n";
+    struct my_string *lines = (struct my_string *) calloc(nlines, sizeof(struct my_string));
+
+    char *answer[] = {
+        "a\n",
+        "b\n",
+        "c\n"
+    };
+
+    divide_lines(&lines, nlines, test_buffer);
+
+    quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings, swap_my_strings);
+
+    for(int i = 0; i < nlines; ++i) {
+        int result = compare_strings(answer[i], lines[i].str);
+        if (result != 0) {
+            printf("Ошибка при тестировании!\nФуникция quicksort\nCтрока номер%d\nОжидаемая строка:\n", i);
+            my_print(answer[i]);
+            printf("\nПолученная строка:\n");
+            my_print(lines[i].str);
+            printf("\n");
+        }
+        assert(result == 0);
+    }
+
 }

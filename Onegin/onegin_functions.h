@@ -147,6 +147,7 @@ void swap_my_strings(void *elem1, void *elem2);
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2), void (*swap_quicksort)(void *elem1, void *elem2));
 
+void test_quicksort();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! int get_file_size documentation
