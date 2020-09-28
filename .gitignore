@@ -5,3 +5,5 @@ output.txt
 *.o
 FILE_SIZE_TESTER.txt
 *.gch
+*.out
+Onegin/ppc.txt
