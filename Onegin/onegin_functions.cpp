@@ -90,10 +90,10 @@ void read_buffer(char **buffer, int *buffer_size, const char *input_filename, FI
 int compare_strings(const char *string1, const char *string2) {
     assert(string1);
     assert(string2);
-    while (*string1 != '\n' && *string1 != '\0' && !isalpha(*string1)){
+    while (*string1 != '\n' && *string1 != '\0' && !isalnum(*string1)){
         ++string1;
     }
-    while (*string2 != '\n' && *string2 != '\0' && !isalpha(*string2)){
+    while (*string2 != '\n' && *string2 != '\0' && !isalnum(*string2)){
         ++string2;
     }
     while (tolower(*string1) == tolower(*string2)) {
@@ -101,10 +101,10 @@ int compare_strings(const char *string1, const char *string2) {
             return 0;
         }
         string1++; string2++;
-        while (*string1 != '\n' && *string1 != '\0' && !isalpha(*string1)){
+        while (*string1 != '\n' && *string1 != '\0' && !isalnum(*string1)){
             ++string1;
         }
-        while (*string2 != '\n' && *string2 != '\0' && !isalpha(*string2)){
+        while (*string2 != '\n' && *string2 != '\0' && !isalnum(*string2)){
             ++string2;
         }
     }
@@ -124,12 +124,12 @@ int compare_strings_from_end(const char *string1, int len1, const char *string2,
     len1--;
     len2--;
     while (1) {
-        if (!isalpha(*string1) && len1 >= 0) {
+        if (!isalnum(*string1) && len1 >= 0) {
             string1--;
             len1--;
             continue;
         }
-        if (!isalpha(*string2) && len2 >= 0) {
+        if (!isalnum(*string2) && len2 >= 0) {
             string2--;
             len2--;
             continue;
