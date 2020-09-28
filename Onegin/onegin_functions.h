@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <sys\stat.h>
+#include <sys/stat.h>
 #include <math.h>
 #include <locale.h>
 #include <ctype.h>
@@ -134,6 +134,8 @@ int compare_my_strings_from_end(void *elem1, void *elem2);
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void swap_my_strings(void *elem1, void *elem2);
 
+void swap(void *elem1, void *elem2, int size);
+
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! void quicksort documentation
 //! sorts array of anything you want if you have comporator and swapper for this
@@ -145,7 +147,7 @@ void swap_my_strings(void *elem1, void *elem2);
 //! @param [in] swap_quicksort - swapper
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2), void (*swap_quicksort)(void *elem1, void *elem2));
+void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2));
 
 void test_quicksort();
 

@@ -168,6 +168,15 @@ int compare_my_strings_from_end(void *elem1, void *elem2) {
     return compare_strings_from_end(string1->str, string1->length, string2->str, string2->length);
 }
 
+void swap(void *elem1, void *elem2, int size) {
+    assert(elem1);
+    assert(elem2);
+    void *temp = calloc(size, 1);
+    memcpy(temp, elem1, size);
+    memcpy(elem1, elem2, size);
+    memcpy(elem2, temp, size);
+}
+
 void swap_my_strings(void *elem1, void *elem2) {
     assert(elem1);
     assert(elem2);
@@ -178,12 +187,12 @@ void swap_my_strings(void *elem1, void *elem2) {
     *s2 = tmp;
 }
 
-void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2), void (*swap_quicksort)(void *elem1, void *elem2)){
+void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2)){
     assert(start);
     assert(finish);
     assert(elem_size >= 0);
     assert(cmp);
-    assert(swap_quicksort);
+    //assert(swap_quicksort);
 
     char *left = (char *) start;
     char *right = (char *) finish;
@@ -191,13 +200,13 @@ void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1,
         return ;
     if (right - left == 2 * elem_size) {
         if (cmp((void *) left, (void *) (right - elem_size)) > 0) {
-            swap_quicksort((void *) left, (void *)(right - elem_size));
+            swap((void *) left, (void *)(right - elem_size), elem_size);
         }
         return ;
     }
     char * m = left + ((right - left) / 2) / elem_size * elem_size;
     if (m != right - elem_size) {
-        swap_quicksort((void *)m, (void *)(right - elem_size));
+        swap((void *)m, (void *)(right - elem_size), elem_size);
     }
     char *place_to_insert = left;
     char *i = left;
@@ -205,16 +214,16 @@ void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1,
         if (cmp((void *)i, (void *)(right - elem_size)) <= 0) {
             //printf("yiy\n");
             if (i != place_to_insert){
-                swap_quicksort((void *)i, (void *)place_to_insert);
+                swap((void *)i, (void *)place_to_insert, elem_size);
             }
             place_to_insert += elem_size;
         }
     }
     if (right - elem_size != place_to_insert) {
-        swap_quicksort((void *)(right - elem_size), (void *) place_to_insert);
+        swap((void *)(right - elem_size), (void *) place_to_insert, elem_size);
     }
-    quicksort(left, place_to_insert, elem_size, cmp, swap_quicksort);
-    quicksort(place_to_insert + elem_size, right, elem_size, cmp, swap_quicksort);
+    quicksort(left, place_to_insert, elem_size, cmp);
+    quicksort(place_to_insert + elem_size, right, elem_size, cmp);
 }
 
 
@@ -311,7 +320,7 @@ int test_everything() {
     test_get_file_size();
     test_get_number_of_lines();
     test_divide_lines();
-    test_quicksort();
+    //test_quicksort();
     printf("Все корректно!\n");
     return TESTCORRECT;
 }
@@ -435,7 +444,7 @@ void testquicksort() {
 
     divide_lines(&lines, nlines, test_buffer);
 
-    quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings, swap_my_strings);
+    quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings);
 
     for(int i = 0; i < nlines; ++i) {
         int result = compare_strings(answer[i], lines[i].str);
