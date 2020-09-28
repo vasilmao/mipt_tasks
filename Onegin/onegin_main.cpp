@@ -5,9 +5,9 @@
 
 
 
-int main(int argc, char *argv[]) {
-    char *input_filename = NULL;
-    char *output_filename = NULL;
+int main(int argc, const char *argv[]) {
+    const char *input_filename = NULL;
+    const char *output_filename = NULL;
     FILE *input = NULL, *output = NULL;
     int result = 0;
     int sort_mode = SORT_DEFAULT;

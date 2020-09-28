@@ -5,7 +5,7 @@ const int TESTCORRECT = 4;
 const int SORT_DEFAULT = 0;
 const int SORT_FROM_END = 1;
 
-void open_file(FILE **file, char *filename, const char *mode) {
+void open_file(FILE **file, const char *filename, const char *mode) {
     assert(file);
     assert(filename);
     *file = fopen(filename, mode);
@@ -15,7 +15,7 @@ void open_file(FILE **file, char *filename, const char *mode) {
     assert(*file);
 }
 
-int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **output_filename, int *sort_mode){
+int use_cmd_arguments(int argc, const char *argv[], const char **input_filename, const char **output_filename, int *sort_mode){
     assert(argv);
     assert(input_filename);
     assert(output_filename);
@@ -72,7 +72,7 @@ int use_cmd_arguments(int argc, char *argv[], char **input_filename, char **outp
     return 0;
 }
 
-void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *input) {
+void read_buffer(char **buffer, int *buffer_size, const char *input_filename, FILE *input) {
     assert(buffer);
     assert(*buffer);
     assert(input_filename);
@@ -87,7 +87,7 @@ void read_buffer(char **buffer, int *buffer_size, char *input_filename, FILE *in
 }
 
 
-int compare_strings(char *string1, char *string2) {
+int compare_strings(const char *string1, const char *string2) {
     assert(string1);
     assert(string2);
     while (*string1 != '\n' && *string1 != '\0' && !isalpha(*string1)){
@@ -112,7 +112,7 @@ int compare_strings(char *string1, char *string2) {
 }
 
 
-int compare_strings_from_end(char *string1, int len1, char *string2, int len2) {
+int compare_strings_from_end(const char *string1, int len1, const char *string2, int len2) {
     assert(string1);
     assert(string2);
     assert(len1 >= 0);
@@ -177,15 +177,6 @@ void swap(void *elem1, void *elem2, int size) {
     memcpy(elem2, temp, size);
 }
 
-void swap_my_strings(void *elem1, void *elem2) {
-    assert(elem1);
-    assert(elem2);
-    struct my_string *s1 = ((struct my_string *)elem1);
-    struct my_string *s2 = ((struct my_string *)elem2);
-    struct my_string tmp = *s1;
-    *s1 = *s2;
-    *s2 = tmp;
-}
 
 void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2)){
     assert(start);
@@ -227,7 +218,7 @@ void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1,
 }
 
 
-int get_file_size(char *filename) {
+int get_file_size(const char *filename) {
     assert(filename);
     struct stat filestats;
     int res = stat(filename, &filestats);
@@ -238,7 +229,7 @@ int get_file_size(char *filename) {
     return filestats.st_size;
 }
 
-int get_number_of_lines(char *buffer) {
+int get_number_of_lines(const char *buffer) {
     assert(buffer);
 
     int nlines = 0;
@@ -288,7 +279,7 @@ void divide_lines(struct my_string **lines, int nlines, char *buffer) {
     }
 }
 
-void my_fprint(char *string, FILE *output_file) {
+void my_fprint(const char *string, FILE *output_file) {
     assert(string);
     assert(output_file);
 
@@ -297,7 +288,7 @@ void my_fprint(char *string, FILE *output_file) {
     }
 }
 
-void my_print(char *string) {
+void my_print(const char *string) {
     assert(string);
     for (int i = 0; string[i] != '\n' && string[i] != '\0'; ++i) {
         putc(string[i], stdout);
@@ -328,7 +319,7 @@ int test_everything() {
 
 void test_compare_strings() {
     int n_tests = 3;
-    char *tests[][2] = {
+    const char *tests[][2] = {
         {"abc", "A,B---c"},
         {"AAB", "aac"},
         {"a..Ab", "...,,,aa**a"}
@@ -351,7 +342,7 @@ void test_compare_strings() {
 
 void test_compare_strings_from_end() {
     int n_tests = 3;
-    char *tests[][2] = {
+    const char *tests[][2] = {
         {"cba", "C---B,A"},
         {"BAA", "caa"},
         {"bA..a", "a**aa,,,..."}
@@ -387,7 +378,7 @@ void test_get_file_size() {
 
 void test_get_number_of_lines() {
     int n_tests = 2;
-    char *tests[] = {
+    const char *tests[] = {
         "a\nb\nc\n",
         "\n\n\na\n\n\n"
     };
@@ -407,8 +398,11 @@ void test_get_number_of_lines() {
 
 void test_divide_lines() {
     int nlines = 3;
-    char *test = "a\nb\n\nc\n";
-    char *answer[] = {
+    char *test = (char *)calloc(8, sizeof(char));
+    strcpy(test, "a\nb\n\nc\n");
+    //test[0] = 'a'; test[1] = '\n'; test[2] = 'b'; test[3] = '\n'; test[4] = '\n'; test[5] = 'c'; test[6] = '\n';
+    //char *test = "a\nb\n\nc\n";
+    const char *answer[] = {
         "a\n",
         "b\n",
         "c\n"
@@ -433,10 +427,11 @@ void test_divide_lines() {
 
 void testquicksort() {
     int nlines = 3;
-    char *test_buffer = "c\na\nb\n";
+    char *test_buffer = (char *)calloc(7, sizeof(char));
+    strcpy(test_buffer, "c\na\nb\n");
     struct my_string *lines = (struct my_string *) calloc(nlines, sizeof(struct my_string));
 
-    char *answer[] = {
+    const char *answer[] = {
         "a\n",
         "b\n",
         "c\n"
