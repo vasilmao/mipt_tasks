@@ -8,7 +8,7 @@
 #include <ctype.h>
 
 extern const int ARGUMENTSERROR;
-extern const int TESTCORRECT;
+extern const int TESTSCORRECT;
 extern const int SORT_DEFAULT;
 extern const int SORT_FROM_END;
 
@@ -58,7 +58,7 @@ void read_buffer(char **buffer, int *buffer_size, const char *input_filename, FI
 //! @return ARGUMENTSERROR if wrong cmd arguments, TESTCORRECT if programm is in test mode and all testings are ok
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int use_cmd_arguments(int argc, const char *argv[], const char **input_filename, const char **output_filename, int *sort_mode);
+int analyse_cmd_arguments(int argc, const char *argv[], const char **input_filename, const char **output_filename, int *sort_mode);
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐

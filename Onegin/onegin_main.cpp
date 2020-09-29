@@ -9,19 +9,17 @@ int main(int argc, const char *argv[]) {
     const char *input_filename = NULL;
     const char *output_filename = NULL;
     FILE *input = NULL, *output = NULL;
-    int result = 0;
     int sort_mode = SORT_DEFAULT;
     //setlocale(LC_ALL, "en_EN.CP1251");
     //---------------------------------------
     //обработка аргументов командной строки |
     //---------------------------------------
 
-    result = use_cmd_arguments(argc, argv, &input_filename, &output_filename, &sort_mode);
-    if (result == ARGUMENTSERROR){
+    int arg_result = analyse_cmd_arguments(argc, argv, &input_filename, &output_filename, &sort_mode);
+    if (arg_result == ARGUMENTSERROR){
         printf("Ошибка при считывании аргументов командной строк\n");
         return ARGUMENTSERROR;
-    }
-    if (result == TESTCORRECT) {
+    } else if (arg_result == TESTSCORRECT) {
         return 0;
     }
 

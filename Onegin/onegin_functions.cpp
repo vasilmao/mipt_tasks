@@ -1,7 +1,7 @@
 #include "onegin_functions.h"
 
 const int ARGUMENTSERROR = 3;
-const int TESTCORRECT = 4;
+const int TESTSCORRECT = 4;
 const int SORT_DEFAULT = 0;
 const int SORT_FROM_END = 1;
 
@@ -15,7 +15,7 @@ void open_file(FILE **file, const char *filename, const char *mode) {
     assert(*file);
 }
 
-int use_cmd_arguments(int argc, const char *argv[], const char **input_filename, const char **output_filename, int *sort_mode){
+int analyse_cmd_arguments(int argc, const char *argv[], const char **input_filename, const char **output_filename, int *sort_mode){
     assert(argv);
     assert(input_filename);
     assert(output_filename);
@@ -74,7 +74,6 @@ int use_cmd_arguments(int argc, const char *argv[], const char **input_filename,
 
 void read_buffer(char **buffer, int *buffer_size, const char *input_filename, FILE *input) {
     assert(buffer);
-    assert(*buffer);
     assert(input_filename);
     assert(input);
     *buffer_size = get_file_size(input_filename) + 1;
@@ -313,7 +312,7 @@ int test_everything() {
     test_divide_lines();
     //test_quicksort();
     printf("Все корректно!\n");
-    return TESTCORRECT;
+    return TESTSCORRECT;
 }
 
 
