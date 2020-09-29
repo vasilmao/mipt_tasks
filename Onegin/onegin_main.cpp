@@ -10,6 +10,7 @@ int main(int argc, const char *argv[]) {
     const char *output_filename = NULL;
     FILE *input = NULL, *output = NULL;
     int sort_mode = NO_SORT;
+    
     //setlocale(LC_ALL, "en_EN.CP1251");
     //---------------------------------------
     //обработка аргументов командной строки |
