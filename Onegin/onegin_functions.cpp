@@ -26,7 +26,8 @@ int analyse_cmd_arguments(int argc, const char *argv[], const char **input_filen
             if (strcmp(argv[i], "--test") == 0) {
                 return test_everything();
             }
-             else if (strcmp(argv[i], "--input") == 0) {
+
+            else if (strcmp(argv[i], "--input") == 0 || strcmp(argv[i], "-i") == 0) {
                 if (i == argc - 1){
                     return ARGUMENTSERROR;
                 }
@@ -34,15 +35,7 @@ int analyse_cmd_arguments(int argc, const char *argv[], const char **input_filen
                 *input_filename = argv[i];
             }
 
-            else if (strcmp(argv[i], "-i") == 0) {
-                if (i == argc - 1){
-                    return ARGUMENTSERROR;
-                }
-                i++;
-                *input_filename = argv[i];
-            }
-
-            else if (strcmp(argv[i], "--output") == 0) {
+            else if (strcmp(argv[i], "--output") == 0 || strcmp(argv[i], "-o") == 0) {
                 if (i == argc - 1){
                     return ARGUMENTSERROR;
                 }
@@ -50,15 +43,10 @@ int analyse_cmd_arguments(int argc, const char *argv[], const char **input_filen
                 *output_filename = argv[i];
             }
 
-            else if (strcmp(argv[i], "-o") == 0) {
-                if (i == argc - 1){
-                    return ARGUMENTSERROR;
-                }
-                i++;
-                *output_filename = argv[i];
-            } else if (strcmp(argv[i], "--sort") == 0) {
+            else if (strcmp(argv[i], "--sort") == 0) {
                 *sort_mode = SORT_DEFAULT;
             }
+            
             else if (strcmp(argv[i], "--sort_end") == 0) {
                 *sort_mode = SORT_FROM_END;
             }
