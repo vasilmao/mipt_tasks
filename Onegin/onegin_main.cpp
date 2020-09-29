@@ -6,10 +6,10 @@
 
 
 int main(int argc, const char *argv[]) {
-    const char *input_filename = NULL;
+    const char *input_filename  = NULL;
     const char *output_filename = NULL;
     FILE *input = NULL, *output = NULL;
-    int sort_mode = SORT_DEFAULT;
+    int sort_mode = NO_SORT;
     //setlocale(LC_ALL, "en_EN.CP1251");
     //---------------------------------------
     //обработка аргументов командной строки |
@@ -33,6 +33,7 @@ int main(int argc, const char *argv[]) {
     //----------------
     //чтение в буфер |
     //----------------
+
     int buffer_size = 0;
     char *buffer;
     read_buffer(&buffer, &buffer_size, input_filename, input);
@@ -41,6 +42,7 @@ int main(int argc, const char *argv[]) {
     //-----------------------------
     //разделение буфера на строки |
     //-----------------------------
+
     int nlines = get_number_of_lines(buffer);
     struct my_string *lines;
     divide_lines(&lines, nlines, buffer);
@@ -48,6 +50,7 @@ int main(int argc, const char *argv[]) {
     //----------------
     //сортировка o_O |
     //----------------
+
     if (sort_mode == SORT_DEFAULT){
         quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings);
     } else if (sort_mode == SORT_FROM_END) {

@@ -43,12 +43,12 @@ void read_buffer(char **buffer, int *buffer_size, const char *input_filename, FI
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! checks cmd arguments:\n
-//! --input <file name>  - change input  filename \n
-//! --i <file name>      - same\n
-//! --output <file name> - change output filename\n
-//! --o <file name>      - same\n
-//! --END                - sort from end of strings\n
-//! --test               - testing mode\n
+//! --input <file name>        - change input  filename \n
+//! --i <file name>            - same\n
+//! --output <file name>       - change output filename\n
+//! --o <file name>            - same\n
+//! --END                      - sort from end of strings\n
+//! --test                     - testing mode\n
 //!
 //! @param[in] argc            - number of  command line arguments
 //! @param[in] argv            - command line arguments
@@ -63,7 +63,6 @@ int analyse_cmd_arguments(int argc, const char *argv[], const char **input_filen
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! void test_everything documentation
 //! runs all test functions
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
@@ -71,7 +70,6 @@ int test_everything();
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! int compare_strings documentation
 //! compares two strings, skipping everything that is not isalpha
 //!
 //! @param[in] string1 - pointer to first  string
@@ -85,7 +83,6 @@ int compare_strings(const char *string1, const char *string2);
 void test_compare_strings();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! int compare_my_strings documentation
 //! compares two my_strings, just returns result of compare_strings function
 //!
 //! @param [in] elem1 - first  my_string
@@ -98,7 +95,6 @@ int compare_my_strings(void *elem1, void *elem2);
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! int compare_strings documentation
 //! compares two strings from end to start, skipping everything that is not isalpha
 //!
 //! @param [in] string1 -  pointer to first  string
@@ -114,7 +110,6 @@ int compare_strings_from_end(const char *string1, int len1, const char *string2,
 void test_compare_strings_from_end();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! int compare_my_strings_from_end documentation
 //! compares two my_strings, just returns result of compare_strings_from_end function
 //!
 //! @param [in] elem1 - first  my_string
@@ -126,7 +121,6 @@ void test_compare_strings_from_end();
 int compare_my_strings_from_end(void *elem1, void *elem2);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! void swap documentation
 //! swaps two elements
 //!
 //! @param [in] elem1 - first element
@@ -137,7 +131,6 @@ int compare_my_strings_from_end(void *elem1, void *elem2);
 void swap(void *elem1, void *elem2, int size);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! void quicksort documentation
 //! sorts array of anything you want if you have comporator and swapper for this
 //!
 //! @param [in] start          - array start
@@ -152,7 +145,6 @@ void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1,
 void test_quicksort();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! int get_file_size documentation
 //! this function counts file size in bytes using fseek and ftell
 //!
 //! @param [in] char *filename - file to count size
@@ -165,7 +157,6 @@ void test_get_file_size();
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! int get_number_of_lines documentation
 //! this function counts number of lines in string
 //!
 //! @param [in] char *buffer - string to count nlines
@@ -180,7 +171,6 @@ void test_get_number_of_lines();
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! void divide_lines documentation
 //! this function divides buffer to lines
 //!
 //! @param [in] lines  - array of my_string to save lines
@@ -194,7 +184,6 @@ void divide_lines(struct my_string **lines, int nlines, char *buffer);
 void test_divide_lines();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! void my_fprint documentation
 //! this function prints string to file (end of string is '\n' or '\0')
 //!
 //! @param [in] string      - string
@@ -204,7 +193,6 @@ void test_divide_lines();
 void my_fprint(const char *string, FILE *output_file);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! void my_print documentation
 //! this function prints string to stdout (end of string is '\n' or '\0')
 //!
 //! @param [in] char *string - string
