@@ -310,7 +310,7 @@ int test_everything() {
     test_get_file_size();
     test_get_number_of_lines();
     test_divide_lines();
-    //test_quicksort();
+    test_quicksort();
     printf("Все корректно!\n");
     return TESTSCORRECT;
 }
@@ -424,7 +424,7 @@ void test_divide_lines() {
     }
 }
 
-void testquicksort() {
+void test_quicksort() {
     int nlines = 3;
     char *test_buffer = (char *)calloc(7, sizeof(char));
     strcpy(test_buffer, "c\na\nb\n");
