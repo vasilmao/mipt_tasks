@@ -2,8 +2,9 @@
 
 const int ARGUMENTSERROR = 3;
 const int TESTSCORRECT = 4;
-const int SORT_DEFAULT = 0;
-const int SORT_FROM_END = 1;
+const int NO_SORT = 0;
+const int SORT_DEFAULT = 1;
+const int SORT_FROM_END = 2;
 
 void open_file(FILE **file, const char *filename, const char *mode) {
     assert(file);
@@ -19,6 +20,7 @@ int analyse_cmd_arguments(int argc, const char *argv[], const char **input_filen
     assert(argv);
     assert(input_filename);
     assert(output_filename);
+    *sort_mode = NO_SORT;
     if (argc > 1) {
         for (int i = 1; i < argc; i++) {
             if (strcmp(argv[i], "--test") == 0) {
@@ -54,9 +56,10 @@ int analyse_cmd_arguments(int argc, const char *argv[], const char **input_filen
                 }
                 i++;
                 *output_filename = argv[i];
+            } else if (strcmp(argv[i], "--sort") == 0) {
+                *sort_mode = SORT_DEFAULT;
             }
-
-            else if (strcmp(argv[i], "--END") == 0) {
+            else if (strcmp(argv[i], "--sort_end") == 0) {
                 *sort_mode = SORT_FROM_END;
             }
         }
@@ -89,10 +92,10 @@ void read_buffer(char **buffer, int *buffer_size, const char *input_filename, FI
 int compare_strings(const char *string1, const char *string2) {
     assert(string1);
     assert(string2);
-    while (*string1 != '\n' && *string1 != '\0' && !isalnum(*string1)){
+    while (*string1 != '\n' && *string1 != '\0' && !isalpha(*string1)){
         ++string1;
     }
-    while (*string2 != '\n' && *string2 != '\0' && !isalnum(*string2)){
+    while (*string2 != '\n' && *string2 != '\0' && !isalpha(*string2)){
         ++string2;
     }
     while (tolower(*string1) == tolower(*string2)) {
@@ -100,10 +103,10 @@ int compare_strings(const char *string1, const char *string2) {
             return 0;
         }
         string1++; string2++;
-        while (*string1 != '\n' && *string1 != '\0' && !isalnum(*string1)){
+        while (*string1 != '\n' && *string1 != '\0' && !isalpha(*string1)){
             ++string1;
         }
-        while (*string2 != '\n' && *string2 != '\0' && !isalnum(*string2)){
+        while (*string2 != '\n' && *string2 != '\0' && !isalpha(*string2)){
             ++string2;
         }
     }
@@ -123,12 +126,12 @@ int compare_strings_from_end(const char *string1, int len1, const char *string2,
     len1--;
     len2--;
     while (1) {
-        if (!isalnum(*string1) && len1 >= 0) {
+        if (!isalpha(*string1) && len1 >= 0) {
             string1--;
             len1--;
             continue;
         }
-        if (!isalnum(*string2) && len2 >= 0) {
+        if (!isalpha(*string2) && len2 >= 0) {
             string2--;
             len2--;
             continue;

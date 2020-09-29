@@ -9,6 +9,7 @@
 
 extern const int ARGUMENTSERROR;
 extern const int TESTSCORRECT;
+extern const int NO_SORT;
 extern const int SORT_DEFAULT;
 extern const int SORT_FROM_END;
 
