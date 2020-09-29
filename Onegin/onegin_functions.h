@@ -47,7 +47,8 @@ void read_buffer(char **buffer, int *buffer_size, const char *input_filename, FI
 //! --i <file name>            - same\n
 //! --output <file name>       - change output filename\n
 //! --o <file name>            - same\n
-//! --END                      - sort from end of strings\n
+//! --sort                     - sort from begin of strings
+//! --sort_end                      - sort from end   of strings\n
 //! --test                     - testing mode\n
 //!
 //! @param[in] argc            - number of  command line arguments
