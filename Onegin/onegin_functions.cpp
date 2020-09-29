@@ -173,7 +173,7 @@ int compare_my_strings_from_end(void *elem1, void *elem2) {
 void swap(void *elem1, void *elem2, int size) {
     assert(elem1);
     assert(elem2);
-    void *temp = calloc(size, 1);
+    void *temp = calloc(1, size);
     memcpy(temp, elem1, size);
     memcpy(elem1, elem2, size);
     memcpy(elem2, temp, size);
