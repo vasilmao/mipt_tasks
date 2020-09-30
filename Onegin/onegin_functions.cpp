@@ -5,6 +5,25 @@ const int TESTSCORRECT = 4;
 const int NO_SORT = 0;
 const int SORT_DEFAULT = 1;
 const int SORT_FROM_END = 2;
+const int MY_SORT_DEFAULT = 3;
+const int MY_SORT_FROM_END = 4;
+
+
+void fprint_lines(Text text, FILE *file) {
+    for(int i = 0; i < text.nlines; ++i) {
+        my_fprint(text.lines[i].str, file);
+        fprintf(file, "\n");
+    }
+}
+
+void destroy_text(Text text) {
+    free(text.buffer);
+    text.buffer = NULL;
+    text.buffer_size = 0;
+    free(text.lines);
+    text.lines = NULL;
+    text.nlines = 0;
+}
 
 void open_file(FILE **file, const char *filename, const char *mode) {
     assert(file);
@@ -46,9 +65,17 @@ int analyse_cmd_arguments(int argc, const char *argv[], const char **input_filen
             else if (strcmp(argv[i], "--sort") == 0) {
                 *sort_mode = SORT_DEFAULT;
             }
-            
+
             else if (strcmp(argv[i], "--sort_end") == 0) {
                 *sort_mode = SORT_FROM_END;
+            }
+
+            else if (strcmp(argv[i], "--my_sort") == 0) {
+                *sort_mode = MY_SORT_DEFAULT;
+            }
+
+            else if (strcmp(argv[i], "--my_sort_end") == 0) {
+                *sort_mode = MY_SORT_FROM_END;
             }
         }
     }
@@ -142,7 +169,7 @@ int compare_strings_from_end(const char *string1, int len1, const char *string2,
     }
 }
 
-int compare_my_strings(void *elem1, void *elem2) {
+int compare_my_strings(const void *elem1, const void *elem2) {
     assert(elem1);
     assert(elem2);
     struct my_string *string1 = (struct my_string *)elem1;
@@ -150,7 +177,7 @@ int compare_my_strings(void *elem1, void *elem2) {
     return compare_strings(string1->str, string2->str);
 }
 
-int compare_my_strings_from_end(void *elem1, void *elem2) {
+int compare_my_strings_from_end(const void *elem1, const void *elem2) {
     assert(elem1);
     assert(elem2);
     struct my_string *string1 = (struct my_string *)elem1;
@@ -168,7 +195,7 @@ void swap(void *elem1, void *elem2, int size) {
 }
 
 
-void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2)){
+void quicksort(void *start, void *finish, int elem_size, int (*cmp)(const void *elem1, const void *elem2)){
     assert(start);
     assert(finish);
     assert(elem_size >= 0);
@@ -325,8 +352,8 @@ void test_compare_strings() {
         int res = compare_strings(tests[i][0], tests[i][1]);
         if (res != answers[i]) {
             printf("Ошибка при тестировании!\nФункция compare_everything\ninput strings: %s\n%s\nожидаемый результат: %d\n полученный результат: %d\n", tests[i][0], tests[i][1], answers[i], res);
+            assert(answers[i] == res);
         }
-        assert(answers[i] == res);
     }
 }
 
@@ -348,8 +375,8 @@ void test_compare_strings_from_end() {
         int res = compare_strings_from_end(tests[i][0], strlen(tests[i][0]), tests[i][1], strlen(tests[i][1]));
         if (res != answers[i]) {
             printf("Ошибка при тестировании!\nФункция compare_strings_from_end\ninput strings: %s\n%s\nОжидаемый результат: %d\nПолученный результат: %d\n", tests[i][0], tests[i][1], answers[i], res);
+            assert(answers[i] == res);
         }
-        assert(answers[i] == res);
     }
 }
 
@@ -362,8 +389,8 @@ void test_get_file_size() {
     int result = get_file_size("FILE_SIZE_TESTER.txt");
     if (result != answer) {
         printf("Ошибка при тестировании!\nФуникция get_file_size\nОжидаемый результат: %d\nПолученный результат: %d\n", answer, result);
+        assert(result == answer);
     }
-    assert(result == answer);
 }
 
 void test_get_number_of_lines() {
@@ -381,8 +408,8 @@ void test_get_number_of_lines() {
         int result = get_number_of_lines(tests[i]);
         if (answers[i] != result) {
             printf("Ошибка при тестировании!\nФуникция get_number_of_lines\nОжидаемый результат: %d\nПолученный результат: %d\n", answers[i], result);
+            assert(answers[i] == result);
         }
-        assert(answers[i] == result);
     }
 }
 
@@ -410,8 +437,8 @@ void test_divide_lines() {
             printf("\nПолученная строка:\n");
             my_print(lines[i].str);
             printf("\n");
+            assert(result == 0);
         }
-        assert(result == 0);
     }
 }
 
@@ -439,8 +466,8 @@ void test_quicksort() {
             printf("\nПолученная строка:\n");
             my_print(lines[i].str);
             printf("\n");
+            assert(result == 0);
         }
-        assert(result == 0);
     }
 
 }

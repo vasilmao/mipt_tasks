@@ -1,5 +1,11 @@
 #include "onegin_functions.h"
 
+void initialize_text(Text text) {
+    text.buffer = NULL;
+    text.buffer_size = 0;
+    text.lines = NULL;
+    text.nlines = 0;
+}
 
 int main(int argc, const char *argv[]) {
     const char *input_filename  = NULL;
@@ -8,6 +14,7 @@ int main(int argc, const char *argv[]) {
     int sort_mode = NO_SORT;
 
     //setlocale(LC_ALL, "en_EN.CP1251");
+
     //---------------------------------------
     //обработка аргументов командной строки |
     //---------------------------------------
@@ -30,28 +37,30 @@ int main(int argc, const char *argv[]) {
     //----------------
     //чтение в буфер |
     //----------------
-
-    int buffer_size = 0;
-    char *buffer;
-    read_buffer(&buffer, &buffer_size, input_filename, input);
+    struct Text Onegin = {};
+    initialize_text(Onegin);
+    read_buffer(&Onegin.buffer, &Onegin.buffer_size, input_filename, input);
     //fclose(input);
 
     //-----------------------------
     //разделение буфера на строки |
     //-----------------------------
 
-    int nlines = get_number_of_lines(buffer);
-    struct my_string *lines;
-    divide_lines(&lines, nlines, buffer);
+    Onegin.nlines = get_number_of_lines(Onegin.buffer);
+    divide_lines(&Onegin.lines, Onegin.nlines, Onegin.buffer);
 
     //----------------
     //сортировка o_O |
     //----------------
 
-    if (sort_mode == SORT_DEFAULT){
-        quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings);
+    if (sort_mode == SORT_DEFAULT)  {
+        qsort    (Onegin.lines, Onegin.nlines,                sizeof(struct my_string), compare_my_strings);
     } else if (sort_mode == SORT_FROM_END) {
-        quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings_from_end);
+        qsort    (Onegin.lines, Onegin.nlines,                sizeof(struct my_string), compare_my_strings_from_end);
+    } else if (sort_mode == MY_SORT_DEFAULT) {
+        quicksort(Onegin.lines, Onegin.lines + Onegin.nlines, sizeof(struct my_string), compare_my_strings);
+    } else if (sort_mode == MY_SORT_FROM_END) {
+        quicksort(Onegin.lines, Onegin.lines + Onegin.nlines, sizeof(struct my_string), compare_my_strings_from_end);
     }
 
     //-----------
@@ -59,18 +68,14 @@ int main(int argc, const char *argv[]) {
     //-----------
 
     open_file(&output, output_filename, "w");
-    for(int i = 0; i < nlines; ++i) {
-        my_fprint(lines[i].str, output);
-        fprintf(output, "\n");
-    }
+    fprint_lines(Onegin, output);
     fclose(output);
 
     //----------------
     //и под конец... |
     //----------------
 
-    free(buffer);
-    free(lines);
+    destroy_text(Onegin);
 
     return 0;
 }

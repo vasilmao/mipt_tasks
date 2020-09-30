@@ -12,11 +12,27 @@ extern const int TESTSCORRECT;
 extern const int NO_SORT;
 extern const int SORT_DEFAULT;
 extern const int SORT_FROM_END;
+extern const int MY_SORT_DEFAULT;
+extern const int MY_SORT_FROM_END;
 
 struct my_string {
     char *str;
     int length;
 } ;
+
+struct Text {
+    char *buffer;
+    int buffer_size;
+    struct my_string *lines;
+    int nlines;
+} ;
+
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! frees buffer and lines
+//!
+//! @param[in] text - text
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+void destroy_text(Text text);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! opens file
@@ -92,7 +108,7 @@ void test_compare_strings();
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_my_strings(void *elem1, void *elem2);
+int compare_my_strings(const void *elem1, const void *elem2);
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
@@ -119,7 +135,7 @@ void test_compare_strings_from_end();
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_my_strings_from_end(void *elem1, void *elem2);
+int compare_my_strings_from_end(const void *elem1, const void *elem2);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! swaps two elements
@@ -141,7 +157,7 @@ void swap(void *elem1, void *elem2, int size);
 //! @param [in] swap_quicksort - swapper
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void quicksort(void *start, void *finish, int elem_size, int (*cmp)(void *elem1, void *elem2));
+void quicksort(void *start, void *finish, int elem_size, int (*cmp)(const void *elem1, const void *elem2));
 
 void test_quicksort();
 
@@ -200,3 +216,12 @@ void my_fprint(const char *string, FILE *output_file);
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 void my_print(const char *string);
+
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! prints lines in text
+//!
+//! @param [in] text - text with lines
+//! @param [in] file - file to print lines
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+void fprint_lines(Text text, FILE *file);
