@@ -313,6 +313,13 @@ void my_print(const char *string) {
     }
 }
 
+void initialize_text(Text text) {
+    text.buffer = NULL;
+    text.buffer_size = 0;
+    text.lines = NULL;
+    text.nlines = 0;
+}
+
 
 
 

@@ -1,11 +1,6 @@
 #include "onegin_functions.h"
 
-void initialize_text(Text text) {
-    text.buffer = NULL;
-    text.buffer_size = 0;
-    text.lines = NULL;
-    text.nlines = 0;
-}
+
 
 int main(int argc, const char *argv[]) {
     const char *input_filename  = NULL;
@@ -54,9 +49,9 @@ int main(int argc, const char *argv[]) {
     //----------------
 
     if (sort_mode == SORT_DEFAULT)  {
-        qsort    (onegin.lines, onegin.nlines,                sizeof(struct MyString), compare_MyStrings);
+        qsort    (onegin.lines, onegin.nlines, sizeof(struct MyString), compare_MyStrings);
     } else if (sort_mode == SORT_FROM_END) {
-        qsort    (onegin.lines, onegin.nlines,                sizeof(struct MyString), compare_MyStrings_from_end);
+        qsort    (onegin.lines, onegin.nlines, sizeof(struct MyString), compare_MyStrings_from_end);
     } else if (sort_mode == MY_SORT_DEFAULT) {
         quicksort(onegin.lines, onegin.nlines, sizeof(struct MyString), compare_MyStrings);
     } else if (sort_mode == MY_SORT_FROM_END) {
