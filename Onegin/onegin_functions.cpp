@@ -195,15 +195,15 @@ void swap(void *elem1, void *elem2, int size) {
 }
 
 
-void quicksort(void *start, void *finish, int elem_size, int (*cmp)(const void *elem1, const void *elem2)){
+void quicksort(void *start, int length, int elem_size, int (*cmp)(const void *elem1, const void *elem2)) {
     assert(start);
-    assert(finish);
+    assert(length >= 0);
     assert(elem_size >= 0);
     assert(cmp);
     //assert(swap_quicksort);
 
     char *left = (char *) start;
-    char *right = (char *) finish;
+    char *right = ((char *) start) + length * elem_size;
     if (right - left <= elem_size)
         return ;
     if (right - left == 2 * elem_size) {
@@ -230,8 +230,8 @@ void quicksort(void *start, void *finish, int elem_size, int (*cmp)(const void *
     if (right - elem_size != place_to_insert) {
         swap((void *)(right - elem_size), (void *) place_to_insert, elem_size);
     }
-    quicksort(left, place_to_insert, elem_size, cmp);
-    quicksort(place_to_insert + elem_size, right, elem_size, cmp);
+    quicksort(left, (place_to_insert - left) / elem_size, elem_size, cmp);
+    quicksort(place_to_insert + elem_size, (right - place_to_insert - elem_size) / elem_size, elem_size, cmp);
 }
 
 
@@ -456,7 +456,7 @@ void test_quicksort() {
 
     divide_lines(&lines, nlines, test_buffer);
 
-    quicksort(lines, lines + nlines, sizeof(struct MyString), compare_MyStrings);
+    quicksort(lines, nlines, sizeof(struct MyString), compare_MyStrings);
 
     for(int i = 0; i < nlines; ++i) {
         int result = compare_strings(answer[i], lines[i].str);

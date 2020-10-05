@@ -37,30 +37,30 @@ int main(int argc, const char *argv[]) {
     //----------------
     //чтение в буфер |
     //----------------
-    struct Text Onegin = {};
-    initialize_text(Onegin);
-    read_buffer(&Onegin.buffer, &Onegin.buffer_size, input_filename, input);
+    struct Text onegin = {};
+    initialize_text(onegin);
+    read_buffer(&onegin.buffer, &onegin.buffer_size, input_filename, input);
     //fclose(input);
 
     //-----------------------------
     //разделение буфера на строки |
     //-----------------------------
 
-    Onegin.nlines = get_number_of_lines(Onegin.buffer);
-    divide_lines(&Onegin.lines, Onegin.nlines, Onegin.buffer);
+    onegin.nlines = get_number_of_lines(onegin.buffer);
+    divide_lines(&onegin.lines, onegin.nlines, onegin.buffer);
 
     //----------------
     //сортировка o_O |
     //----------------
 
     if (sort_mode == SORT_DEFAULT)  {
-        qsort    (Onegin.lines, Onegin.nlines,                sizeof(struct MyString), compare_MyStrings);
+        qsort    (onegin.lines, onegin.nlines,                sizeof(struct MyString), compare_MyStrings);
     } else if (sort_mode == SORT_FROM_END) {
-        qsort    (Onegin.lines, Onegin.nlines,                sizeof(struct MyString), compare_MyStrings_from_end);
+        qsort    (onegin.lines, onegin.nlines,                sizeof(struct MyString), compare_MyStrings_from_end);
     } else if (sort_mode == MY_SORT_DEFAULT) {
-        quicksort(Onegin.lines, Onegin.lines + Onegin.nlines, sizeof(struct MyString), compare_MyStrings);
+        quicksort(onegin.lines, onegin.nlines, sizeof(struct MyString), compare_MyStrings);
     } else if (sort_mode == MY_SORT_FROM_END) {
-        quicksort(Onegin.lines, Onegin.lines + Onegin.nlines, sizeof(struct MyString), compare_MyStrings_from_end);
+        quicksort(onegin.lines, onegin.nlines, sizeof(struct MyString), compare_MyStrings_from_end);
     }
 
     //-----------
@@ -68,14 +68,14 @@ int main(int argc, const char *argv[]) {
     //-----------
 
     open_file(&output, output_filename, "w");
-    fprint_lines(Onegin, output);
+    fprint_lines(onegin, output);
     fclose(output);
 
     //----------------
     //и под конец... |
     //----------------
 
-    destroy_text(Onegin);
+    destroy_text(onegin);
 
     return 0;
 }

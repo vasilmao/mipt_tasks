@@ -157,7 +157,7 @@ void swap(void *elem1, void *elem2, int size);
 //! @param [in] swap_quicksort - swapper
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void quicksort(void *start, void *finish, int elem_size, int (*cmp)(const void *elem1, const void *elem2));
+void quicksort(void *start, int length, int elem_size, int (*cmp)(const void *elem1, const void *elem2));
 
 void test_quicksort();
 
