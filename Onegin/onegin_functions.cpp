@@ -169,19 +169,19 @@ int compare_strings_from_end(const char *string1, int len1, const char *string2,
     }
 }
 
-int compare_my_strings(const void *elem1, const void *elem2) {
+int compare_MyStrings(const void *elem1, const void *elem2) {
     assert(elem1);
     assert(elem2);
-    struct my_string *string1 = (struct my_string *)elem1;
-    struct my_string *string2 = (struct my_string *)elem2;
+    struct MyString *string1 = (struct MyString *)elem1;
+    struct MyString *string2 = (struct MyString *)elem2;
     return compare_strings(string1->str, string2->str);
 }
 
-int compare_my_strings_from_end(const void *elem1, const void *elem2) {
+int compare_MyStrings_from_end(const void *elem1, const void *elem2) {
     assert(elem1);
     assert(elem2);
-    struct my_string *string1 = (struct my_string *)elem1;
-    struct my_string *string2 = (struct my_string *)elem2;
+    struct MyString *string1 = (struct MyString *)elem1;
+    struct MyString *string2 = (struct MyString *)elem2;
     return compare_strings_from_end(string1->str, string1->length, string2->str, string2->length);
 }
 
@@ -272,12 +272,12 @@ int get_number_of_lines(const char *buffer) {
     return nlines;
 }
 
-void divide_lines(struct my_string **lines, int nlines, char *buffer) {
+void divide_lines(struct MyString **lines, int nlines, char *buffer) {
     assert(lines);
     assert(nlines >= 0);
     assert(buffer);
 
-    *lines = (struct my_string *)calloc(nlines + 1, sizeof(struct my_string));
+    *lines = (struct MyString *)calloc(nlines + 1, sizeof(struct MyString));
     (*lines)[0].str = buffer;
     int counter = 1;
 
@@ -424,7 +424,7 @@ void test_divide_lines() {
         "b\n",
         "c\n"
     };
-    struct my_string *lines = (struct my_string *) calloc(nlines, sizeof(struct my_string));
+    struct MyString *lines = (struct MyString *) calloc(nlines, sizeof(struct MyString));
 
     divide_lines(&lines, nlines, test);
 
@@ -446,7 +446,7 @@ void test_quicksort() {
     int nlines = 3;
     char *test_buffer = (char *)calloc(7, sizeof(char));
     strcpy(test_buffer, "c\na\nb\n");
-    struct my_string *lines = (struct my_string *) calloc(nlines, sizeof(struct my_string));
+    struct MyString *lines = (struct MyString *) calloc(nlines, sizeof(struct MyString));
 
     const char *answer[] = {
         "a\n",
@@ -456,7 +456,7 @@ void test_quicksort() {
 
     divide_lines(&lines, nlines, test_buffer);
 
-    quicksort(lines, lines + nlines, sizeof(struct my_string), compare_my_strings);
+    quicksort(lines, lines + nlines, sizeof(struct MyString), compare_MyStrings);
 
     for(int i = 0; i < nlines; ++i) {
         int result = compare_strings(answer[i], lines[i].str);

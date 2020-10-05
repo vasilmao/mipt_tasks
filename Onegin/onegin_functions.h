@@ -15,7 +15,7 @@ extern const int SORT_FROM_END;
 extern const int MY_SORT_DEFAULT;
 extern const int MY_SORT_FROM_END;
 
-struct my_string {
+struct MyString {
     char *str;
     int length;
 } ;
@@ -23,7 +23,7 @@ struct my_string {
 struct Text {
     char *buffer;
     int buffer_size;
-    struct my_string *lines;
+    struct MyString *lines;
     int nlines;
 } ;
 
@@ -100,15 +100,15 @@ int compare_strings(const char *string1, const char *string2);
 void test_compare_strings();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! compares two my_strings, just returns result of compare_strings function
+//! compares two MyStrings, just returns result of compare_strings function
 //!
-//! @param [in] elem1 - first  my_string
-//! @param [in] elem2 - second my_string
+//! @param [in] elem1 - first  MyString
+//! @param [in] elem2 - second MyString
 //!
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_my_strings(const void *elem1, const void *elem2);
+int compare_MyStrings(const void *elem1, const void *elem2);
 
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
@@ -127,15 +127,15 @@ int compare_strings_from_end(const char *string1, int len1, const char *string2,
 void test_compare_strings_from_end();
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-//! compares two my_strings, just returns result of compare_strings_from_end function
+//! compares two MyStrings, just returns result of compare_strings_from_end function
 //!
-//! @param [in] elem1 - first  my_string
-//! @param [in] elem2 - second my_string
+//! @param [in] elem1 - first  MyString
+//! @param [in] elem2 - second MyString
 //!
 //! @return -1 if first is less than second / 0 if strings are equal / 1 if second is less than first
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-int compare_my_strings_from_end(const void *elem1, const void *elem2);
+int compare_MyStrings_from_end(const void *elem1, const void *elem2);
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! swaps two elements
@@ -190,13 +190,13 @@ void test_get_number_of_lines();
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 //! this function divides buffer to lines
 //!
-//! @param [in] lines  - array of my_string to save lines
+//! @param [in] lines  - array of MyString to save lines
 //! @param [in] nlines - number of lines to split
 //! @param [in] buffer - string to count nlines
 //!
 //! @note it skips empty lines like get_number_of_lines function
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-void divide_lines(struct my_string **lines, int nlines, char *buffer);
+void divide_lines(struct MyString **lines, int nlines, char *buffer);
 
 void test_divide_lines();
 

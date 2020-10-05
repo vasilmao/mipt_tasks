@@ -54,13 +54,13 @@ int main(int argc, const char *argv[]) {
     //----------------
 
     if (sort_mode == SORT_DEFAULT)  {
-        qsort    (Onegin.lines, Onegin.nlines,                sizeof(struct my_string), compare_my_strings);
+        qsort    (Onegin.lines, Onegin.nlines,                sizeof(struct MyString), compare_MyStrings);
     } else if (sort_mode == SORT_FROM_END) {
-        qsort    (Onegin.lines, Onegin.nlines,                sizeof(struct my_string), compare_my_strings_from_end);
+        qsort    (Onegin.lines, Onegin.nlines,                sizeof(struct MyString), compare_MyStrings_from_end);
     } else if (sort_mode == MY_SORT_DEFAULT) {
-        quicksort(Onegin.lines, Onegin.lines + Onegin.nlines, sizeof(struct my_string), compare_my_strings);
+        quicksort(Onegin.lines, Onegin.lines + Onegin.nlines, sizeof(struct MyString), compare_MyStrings);
     } else if (sort_mode == MY_SORT_FROM_END) {
-        quicksort(Onegin.lines, Onegin.lines + Onegin.nlines, sizeof(struct my_string), compare_my_strings_from_end);
+        quicksort(Onegin.lines, Onegin.lines + Onegin.nlines, sizeof(struct MyString), compare_MyStrings_from_end);
     }
 
     //-----------
